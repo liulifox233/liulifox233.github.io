@@ -1,0 +1,99 @@
+site_name: Ruri's Blog
+site_description: an example blog set up following the blog tutorials
+site_url: http://www.example.com
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: pink-light
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: pink-dark
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+  features:
+    - content.code.annotate
+    - navigation.expand
+    - toc.follow
+    - search.suggest
+    - navigation.top
+    - search.share
+    - navigation.indexes
+    - navigation.footer
+    - navigation.tracking
+    - search.highlight
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.tabs
+    - content.tabs.link
+    - content.code.copy
+
+plugins:
+  - search
+  - blog:
+      blog_toc: true
+      blog_dir: .
+      archive_date_format: MMMM YYYY
+      archive_url_date_format: yyyy/MM
+      post_date_format: full
+      categories_allowed:
+        - 生活
+        - Tech
+      archive_toc: true
+      categories_toc: true
+      draft_if_future_date: true
+      post_slugify: !!python/object/apply:ext.slugs.slugify
+        kwds:
+          short: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      name: Ruri on Github
+      link: https://github.com/liulifox233
+
+hooks:
+  - hooks/socialmedia.py
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.critic
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_code_format
+  - attr_list
+  - def_list
+  - pymdownx.critic
+  - toc:
+      permalink: true
+  - footnotes
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Posts:
+    - index.md
+  - About:
+    - about.md
+
+extra_css:
+  - stylesheets/extra.css
