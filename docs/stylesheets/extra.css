@@ -1,11 +1,11 @@
-[data-md-color-scheme="pink-light"] {
+[data-md-color-scheme="light"] {
     --md-hue: 6;
     --md-default-bg-color: hsla(var(--md-hue), 90%, 93%, 1);
     --md-default-bg-color--light: hsla(var(--md-hue), 90%, 93%, 0.54);
     --md-default-bg-color--lighter: hsla(var(--md-hue), 90%, 93%, 0.26);
     --md-default-bg-color--lightest: hsla(var(--md-hue), 90%, 93%, 0.07);
     --md-default-bg-color: #FCF7F8;
-    --md-default-fg-color--light: #DD99BB;
+    --md-admonition-bg-color: #FCF7F8;
 
     --md-primary-fg-color: #565676;
     --md-primary-fg-color--light: #c4c1d7;
@@ -15,7 +15,9 @@
 
     --md-code-bg-color: #FEEFDD;
 
-    --md-typeset-a-color: #DD99BB;
+    --md-code-bg-color: #FFF2EB;
+
+    --md-typeset-a-color: #664c59;
 
     --md-accent-fg-color: #A599B5;
     --md-accent-fg-color--transparent: #f500561a;
@@ -23,7 +25,7 @@
     --md-accent-bg-color--light: #ffffffb3;
 }
 
-[data-md-color-scheme="pink-dark"] {
+[data-md-color-scheme="dark"] {
     --md-hue: 280;
     --md-default-fg-color: hsla(var(--md-hue), 75%, 95%, 1);
     --md-default-fg-color--light: hsla(var(--md-hue), 75%, 90%, 0.62);

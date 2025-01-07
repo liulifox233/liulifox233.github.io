@@ -1,21 +1,36 @@
 site_name: Ruri's Blog
-site_description: an example blog set up following the blog tutorials
-site_url: http://www.example.com
+site_description: 这里是流离的博客
+site_url: https://liulifox.top
+repo_url: https://github.com/liulifox233/mkblog
+repo_name: liulifox233/mkblog
+edit_uri_template: "edit/main/docs/{path}"
 
 theme:
   name: material
   language: zh
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  icon:
+    repo: fontawesome/brands/github
   palette:
-    - scheme: pink-light
+    - media: "(prefers-color-scheme)"
       toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    - scheme: pink-dark
-      toggle:
-        icon: material/weather-sunny
+        icon: material/brightness-auto
         name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: light
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: dark
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
 
   features:
+    - content.action.edit
+    - content.action.view
     - content.code.annotate
     - navigation.expand
     - toc.follow
@@ -75,6 +90,7 @@ markdown_extensions:
             format: !!python/name:pymdownx.superfences.fence_code_format
   - attr_list
   - def_list
+  - tables
   - pymdownx.critic
   - toc:
       permalink: true
@@ -92,8 +108,12 @@ markdown_extensions:
 nav:
   - Posts:
     - index.md
+  - Notes:
+    - notes/index.md
   - About:
     - about.md
 
 extra_css:
   - stylesheets/extra.css
+
+copyright: <a href="https://icp.gov.moe/?keyword=20250039" target="_blank">萌ICP备20250039号</a>

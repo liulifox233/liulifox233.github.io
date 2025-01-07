@@ -10,9 +10,10 @@ authors:
 
 # Live2D Cubism Editor Crack Record
 
-> 以防自己忘记，在这里记录一下
-> 
-> 笔者使用的是 MacOS 版本的 Live2D Cubism Editor 5.1
+!!!NOTICE
+    以防自己忘记，在这里记录一下
+    
+    笔者使用的是 MacOS 版本的 Live2D Cubism Editor 5.1
 <!-- more -->
 ## 尝试
 
