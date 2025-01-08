@@ -6,6 +6,7 @@ categories:
   - Tech
 authors:
   - ruri
+hero: assets/posts/案外そんなフューチャー.webp
 ---
 
 # Homebrew Formula 二三事

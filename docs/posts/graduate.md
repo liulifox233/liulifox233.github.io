@@ -6,7 +6,7 @@ categories:
   - 生活
 authors:
   - ruri
-hero: 2.png
+hero: assets/posts/graduate.webp
 ---
 
 # 隧道的终点，人生的下一站
