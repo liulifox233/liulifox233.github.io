@@ -63,7 +63,6 @@ plugins:
         - Tech
       archive_toc: true
       categories_toc: true
-      draft_if_future_date: true
       post_slugify: !!python/object/apply:ext.slugs.slugify
         kwds:
           short: true
@@ -80,7 +79,6 @@ plugins:
         - Tech
       archive_toc: true
       categories_toc: true
-      draft_if_future_date: true
       post_slugify: !!python/object/apply:ext.slugs.slugify
         kwds:
           short: true
