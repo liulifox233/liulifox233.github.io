@@ -50,9 +50,28 @@ theme:
 
 plugins:
   - search
+  - awesome-pages
   - blog:
       blog_toc: true
       blog_dir: .
+      post_dir: "{blog}/posts"
+      archive_date_format: MMMM YYYY
+      archive_url_date_format: yyyy/MM
+      post_date_format: full
+      categories_allowed:
+        - 生活
+        - Tech
+      archive_toc: true
+      categories_toc: true
+      draft_if_future_date: true
+      post_slugify: !!python/object/apply:ext.slugs.slugify
+        kwds:
+          short: true
+  - blog:
+      archive: false
+      blog_toc: true
+      blog_dir: records
+      post_dir: "{blog}/posts"
       archive_date_format: MMMM YYYY
       archive_url_date_format: yyyy/MM
       post_date_format: full
@@ -108,6 +127,8 @@ markdown_extensions:
 nav:
   - Posts:
     - index.md
+  - Records:
+    - records/index.md
   - Notes:
     - notes/index.md
   - About:
