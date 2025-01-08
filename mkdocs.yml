@@ -90,9 +90,6 @@ extra:
       name: Ruri on Github
       link: https://github.com/liulifox233
 
-hooks:
-  - hooks/socialmedia.py
-
 markdown_extensions:
   - admonition
   - pymdownx.superfences

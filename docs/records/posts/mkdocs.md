@@ -5,6 +5,7 @@ categories:
   - Tech
 authors:
   - ruri
+hero: assets/posts/空.webp
 ---
 
 # 部署 MkDocs 至 Cloudflare Pages
