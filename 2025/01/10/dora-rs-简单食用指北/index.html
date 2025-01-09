@@ -10,13 +10,11 @@
       
       
       
-        <link rel="canonical" href="https://liulifox.top/2025/01/09/%E5%87%A0%E4%BB%B6%E5%B0%8F%E4%BA%8B/">
+        <link rel="canonical" href="https://liulifox.top/2025/01/10/dora-rs-%E7%AE%80%E5%8D%95%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8C%97/">
       
       
-        <link rel="prev" href="../../../../2024/12/22/homebrew-formula-%E4%BA%8C%E4%B8%89%E4%BA%8B/">
+        <link rel="prev" href="../../09/%E5%87%A0%E4%BB%B6%E5%B0%8F%E4%BA%8B/">
       
-      
-        <link rel="next" href="../../10/dora-rs-%E7%AE%80%E5%8D%95%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8C%97/">
       
       
       <link rel="icon" href="../../../../assets/logo.svg">
@@ -24,7 +22,7 @@
     
     
       
-        <title>几件小事 - Ruri's Blog</title>
+        <title>dora-rs 简单食用指北 - Ruri's Blog</title>
       
     
     
@@ -78,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#dora-rs" class="md-skip">
           跳转至
         </a>
       
@@ -111,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              几件小事
+              dora-rs 简单食用指北
             
           </span>
         </div>
@@ -952,27 +950,51 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      失眠
+      设计预览
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#dora-rs-cli" class="md-nav__link">
     <span class="md-ellipsis">
-      乐事
+      dora-rs cli
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="dora-rs cli">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      温雨
+      如何定义 Workflow ?
     </span>
   </a>
   
@@ -1034,7 +1056,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2025-01-09 03:19:27+00:00" class="md-ellipsis">2025年1月9日星期四</time>
+                        <time datetime="2025-01-10 03:30:39+00:00" class="md-ellipsis">2025年1月10日星期五</time>
                       </div>
                     </li>
                     
@@ -1045,7 +1067,7 @@
                           <span class="md-ellipsis">
                             分类于
                             
-                              <a href="../../../../category/%E7%94%9F%E6%B4%BB/">生活</a></span>
+                              <a href="../../../../category/tech/">Tech</a></span>
                         </div>
                       </li>
                     
@@ -1056,7 +1078,7 @@
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
                           <span class="md-ellipsis">
                             
-                              需要 1 分钟阅读时间
+                              需要 3 分钟阅读时间
                             
                           </span>
                         </div>
@@ -1100,15 +1122,6 @@
 
 <!-- Hero image -->
 
-<div class="mdx-hero__image" style="overflow: hidden; aspect-ratio: 16 / 9; margin-bottom: 20px;">
-    <img
-        src="https://liulifox.top/assets/posts/Connecting.webp"
-        alt=""
-        draggable="false"
-        style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
-    >
-</div>
-
 
 <!--
   Hack: check whether the content contains a h1 headline. If it doesn't, the
@@ -1119,7 +1132,7 @@
 <!-- Actions -->
 
   
-    <a href="https://github.com/liulifox233/mkblog/edit/main/docs/posts/little_things.md" title="编辑此页" class="md-content__button md-icon">
+    <a href="https://github.com/liulifox233/mkblog/edit/main/docs/posts/dora.md" title="编辑此页" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -1128,7 +1141,7 @@
     
       
     
-    <a href="https://github.com/liulifox233/mkblog/raw/main/docs/posts/little_things.md" title="查看本页的源代码" class="md-content__button md-icon">
+    <a href="https://github.com/liulifox233/mkblog/raw/main/docs/posts/dora.md" title="查看本页的源代码" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
@@ -1136,40 +1149,89 @@
 
 
 <!-- Page content -->
-<h1 id="_1">几件小事<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>写在高考半年后。</p>
+<h1 id="dora-rs">dora-rs 简单食用指北<a class="headerlink" href="#dora-rs" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>你是否曾为 C++ 项目的编译痛苦万分？<br />
+你是否听到过来自 Makefile 的古神低语？<br />
+遗憾的是，如果你玩 Robotic, 这些都是你过不去的坎。因为 ROS2 早已积重难返<br />
+等等, 真的过不去吗？<br />
+为什么不试试 <a href="https://github.com/dora-rs/dora">dora-rs</a> 呢？</p>
+</blockquote>
+<p><strong>Dataflow-Oriented Robotic Architecture</strong> (dora-rs) is a framework that makes creation of robotic applications fast and simple.</p>
+<p>dora-rs 是一个<strong>数据流导向</strong>机器人架构框架 ，它能让你方便快速开发高效的机器人应用。</p>
 <!-- more -->
-<hr />
-<h2 id="_2">失眠<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>高三最痛苦的一件事：失眠。</p>
-<p>在半夜被鼾声吵醒，遂失眠一晚。</p>
-<p>随后是第二晚、第三晚 ...</p>
-<p>漆黑的天花板、舍友鼾声、失意的模拟考试，也许都是压垮我的那根稻草。</p>
-<p>只有失眠过的人才能知道，在深夜，人能有多脆弱。</p>
-<hr />
-<h2 id="_3">乐事<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>学校的校园网安全就是个笑话。</p>
-<p>请允许我简短评价一下内网里的各个卧龙凤雏。</p>
-<p>午休限网：走 53 端口就能绕过的赛博马奇诺防线</p>
-<p>图书馆电脑：VPS 免费送</p>
-<p>摄像头：质量非常好，但如果不用弱密码就更好了</p>
-<p>电子班牌：不关 adb 的后果就是被人拿来打音游</p>
-<p>打印机：灵异事件之我的打印机怎么半夜自己打印 debug 信息</p>
-<p>...</p>
-<p>而面对网络安全攻防演练，电教老师们给出的解决方案是...</p>
-<p>(已拔线)</p>
-<hr />
-<h2 id="_4">温雨<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>高考那天下雨了。</p>
-<p>是独属夏天的，闷热，潮湿的小雨。</p>
-<p>还没来得及为某几科的失误感到懊悔，三天的时间匆匆过去了。</p>
-<p>英语收卷铃响起，高考结束了。</p>
-<p>我茫然地还想做些什么，然而木已成舟，尘埃已然落定。</p>
-<p>真可笑啊，人生18年的努力，就这样被定格为了一小串三位数字。</p>
-<p>那么，我做的足够好了吗？</p>
-<p>我不知道。</p>
-<hr />
-<p>(WIP)</p>
+<h2 id="_1">设计预览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>dora 框架由不同的组件构成：</p>
+<p><img alt="design diagram" src="../../../../assets/posts/overview.svg" /></p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<ul>
+<li>
+<p><strong>Nodes:</strong> Dora nodes are separate, isolated processes that communicate with other nodes through the dora library. Nodes can be either a custom, user-specified program. Nodes implement their own <code>main</code> function and thus have full control over their execution.</p>
+<p>Nodes use the dora <em>library</em> to communicate with other nodes, which is available for multiple languages (Rust, C; maybe Python, WASM). Communication happens through a <em>communication layer</em>, which will be <code>zenoh</code> in our first version. We plan to add more options in the future. All communication layer implementations should be robust against disconnections, so operators should be able to keep running even if they lose the connection to the coordinator.</p>
+</li>
+<li>
+<p><strong>Coordinator:</strong> The coordinator is responsible for reading the dataflow from a YAML file, verifying it, and deploying the nodes to the specified or automatically determined machines. It monitors the operator's health and implements high level cluster management functionality. For example, we could implement automatic scaling for cloud nodes or operator replication and restarts. The coordinator can be controlled through a command line program (CLI).</p>
+</li>
+</ul>
+</div>
+<p>一个典型的 dora 工作流程:</p>
+<ul>
+<li>
+<p>Coordinator 启动：在主控机器上启动 dora coordinator，它将作为系统的中央控制单元。</p>
+</li>
+<li>
+<p>守护进程启动：在每台参与的机器上启动 dora daemon，并通过 --coordinator-addr 参数指定协调器的地址，以建立连接。</p>
+</li>
+<li>
+<p>数据流部署：Coordinator 根据数据流配置，指示各守护进程在其管理的机器上启动相应的节点。</p>
+</li>
+<li>
+<p>任务执行：各节点按照定义的操作符执行任务，守护进程负责本地管理，Coordinator 进行全局监控和协调。</p>
+</li>
+</ul>
+<h2 id="dora-rs-cli">dora-rs cli<a class="headerlink" href="#dora-rs-cli" title="Permanent link">&para;</a></h2>
+<h3 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h3>
+<p>你可以用以下命令在任何具有有 rust 环境的机器下按照 dora-rs cli</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cargo<span class="w"> </span>install<span class="w"> </span>--locked<span class="w"> </span>dora-cli
+</span></code></pre></div>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>dora<span class="w"> </span>--help
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>dora-rs<span class="w"> </span>cli<span class="w"> </span>client
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Usage:<span class="w"> </span>dora<span class="w"> </span>&lt;COMMAND&gt;
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Commands:
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>check<span class="w">        </span>Check<span class="w"> </span><span class="k">if</span><span class="w"> </span>the<span class="w"> </span>coordinator<span class="w"> </span>and<span class="w"> </span>the<span class="w"> </span>daemon<span class="w"> </span>is<span class="w"> </span>running
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>graph<span class="w">        </span>Generate<span class="w"> </span>a<span class="w"> </span>visualization<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>given<span class="w"> </span>graph<span class="w"> </span>using<span class="w"> </span>mermaid.js.<span class="w"> </span>Use<span class="w"> </span>--open<span class="w"> </span>to<span class="w"> </span>open<span class="w"> </span>browser
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>build<span class="w">        </span>Run<span class="w"> </span>build<span class="w"> </span>commands<span class="w"> </span>provided<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>given<span class="w"> </span>dataflow
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>new<span class="w">          </span>Generate<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>project<span class="w"> </span>or<span class="w"> </span>node.<span class="w"> </span>Choose<span class="w"> </span>the<span class="w"> </span>language<span class="w"> </span>between<span class="w"> </span>Rust,<span class="w"> </span>Python,<span class="w"> </span>C<span class="w"> </span>or<span class="w"> </span>C++
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span>run<span class="w">          </span>Run<span class="w"> </span>a<span class="w"> </span>dataflow<span class="w"> </span>locally
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span>up<span class="w">           </span>Spawn<span class="w"> </span>coordinator<span class="w"> </span>and<span class="w"> </span>daemon<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nb">local</span><span class="w"> </span>mode<span class="w"> </span><span class="o">(</span>with<span class="w"> </span>default<span class="w"> </span>config<span class="o">)</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">  </span>destroy<span class="w">      </span>Destroy<span class="w"> </span>running<span class="w"> </span>coordinator<span class="w"> </span>and<span class="w"> </span>daemon.<span class="w"> </span>If<span class="w"> </span>some<span class="w"> </span>dataflows<span class="w"> </span>are<span class="w"> </span>still<span class="w"> </span>running,<span class="w"> </span>they<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>stopped<span class="w"> </span>first
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span>start<span class="w">        </span>Start<span class="w"> </span>the<span class="w"> </span>given<span class="w"> </span>dataflow<span class="w"> </span>path.<span class="w"> </span>Attach<span class="w"> </span>a<span class="w"> </span>name<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>running<span class="w"> </span>dataflow<span class="w"> </span>by<span class="w"> </span>using<span class="w"> </span>--name
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">  </span>stop<span class="w">         </span>Stop<span class="w"> </span>the<span class="w"> </span>given<span class="w"> </span>dataflow<span class="w"> </span>UUID.<span class="w"> </span>If<span class="w"> </span>no<span class="w"> </span>id<span class="w"> </span>is<span class="w"> </span>provided,<span class="w"> </span>you<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>able<span class="w"> </span>to<span class="w"> </span>choose<span class="w"> </span>between<span class="w"> </span>the<span class="w"> </span>running<span class="w"> </span>dataflows
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">  </span>list<span class="w">         </span>List<span class="w"> </span>running<span class="w"> </span>dataflows
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">  </span>logs<span class="w">         </span>Show<span class="w"> </span>logs<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>given<span class="w"> </span>dataflow<span class="w"> </span>and<span class="w"> </span>node
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">  </span>daemon<span class="w">       </span>Run<span class="w"> </span>daemon
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">  </span>runtime<span class="w">      </span>Run<span class="w"> </span>runtime
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">  </span>coordinator<span class="w">  </span>Run<span class="w"> </span>coordinator
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">  </span><span class="nb">help</span><span class="w">         </span>Print<span class="w"> </span>this<span class="w"> </span>message<span class="w"> </span>or<span class="w"> </span>the<span class="w"> </span><span class="nb">help</span><span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>given<span class="w"> </span>subcommand<span class="o">(</span>s<span class="o">)</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>Options:
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">     </span>Print<span class="w"> </span><span class="nb">help</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">  </span>-V,<span class="w"> </span>--version<span class="w">  </span>Print<span class="w"> </span>version
+</span></code></pre></div>
+<p>解释几个重要的命令:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>dora<span class="w"> </span>build<span class="w"> </span>&lt;PATH&gt;<span class="w"> </span><span class="c1"># 构建 Workflow 内定义的节点, 在 dora run 之前运行</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$<span class="w"> </span>dora<span class="w"> </span>run<span class="w"> </span>&lt;PATH&gt;<span class="w"> </span><span class="c1"># 快速在本地环境下启动 Daemon 和 Coordinator 并运行动态节点, 用于开发</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>$<span class="w"> </span>dora<span class="w"> </span>up<span class="w"> </span><span class="c1"># 快速在本地环境下启动 Daemon 和 Coordinator</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$<span class="w"> </span>dora<span class="w"> </span>destroy<span class="w"> </span><span class="c1"># 关闭 Daemon 和 Coordinator</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>$<span class="w"> </span>dora<span class="w"> </span>start<span class="w"> </span>&lt;PATH&gt;<span class="w"> </span>--name<span class="w"> </span>&lt;NAME&gt;<span class="w"> </span><span class="c1"># 启动 Workflow, 但不运行节点</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>$<span class="w"> </span>dora<span class="w"> </span>logs<span class="w"> </span><span class="o">[</span>UUID_OR_NAME<span class="o">]</span><span class="w"> </span>&lt;NAME&gt;<span class="w"> </span><span class="c1"># [UUID_OR_NAME]是 Workflow 名称或 uuid, &lt;NAME&gt; 是节点名称</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>$<span class="w"> </span>dora<span class="w"> </span>list<span class="w"> </span><span class="c1"># 列出所有活动的 Workflow</span>
+</span></code></pre></div>
+<h2 id="workflow">如何定义 Workflow ?<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h2>
 
 <!-- Source file information -->
 
@@ -1220,7 +1282,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../../../../2024/12/22/homebrew-formula-%E4%BA%8C%E4%B8%89%E4%BA%8B/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Homebrew Formula 二三事">
+          <a href="../../09/%E5%87%A0%E4%BB%B6%E5%B0%8F%E4%BA%8B/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 几件小事">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1230,27 +1292,11 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                Homebrew Formula 二三事
+                几件小事
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../../10/dora-rs-%E7%AE%80%E5%8D%95%E9%A3%9F%E7%94%A8%E6%8C%87%E5%8C%97/" class="md-footer__link md-footer__link--next" aria-label="下一页: dora-rs 简单食用指北">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                下一页
-              </span>
-              <div class="md-ellipsis">
-                dora-rs 简单食用指北
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
