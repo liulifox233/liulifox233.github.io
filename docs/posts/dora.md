@@ -1,6 +1,7 @@
 ---
 date:
   created: 2025-01-10 03:30:39
+  updated: 2025-01-29 06:55:39
 categories:
   - Tech
 authors:
@@ -14,7 +15,7 @@ draft: true
 > 你是否听到过来自 Makefile 的古神低语？  
 > 遗憾的是，如果你玩 Robotic, 这些都是你过不去的坎。因为 ROS2 早已积重难返  
 > 等等, 真的过不去吗？  
-> 为什么不试试 [dora-rs](https://github.com/dora-rs/dora) 呢？
+> 为什么不试试 __[dora-rs](https://github.com/dora-rs/dora)__ 呢？
 
 **Dataflow-Oriented Robotic Architecture** (dora-rs) is a framework that makes creation of robotic applications fast and simple.
 
@@ -43,6 +44,14 @@ dora 框架由不同的组件构成：
 - 数据流部署：Coordinator 根据数据流配置，指示各守护进程在其管理的机器上启动相应的节点。
 
 - 任务执行：各节点按照定义的操作符执行任务，守护进程负责本地管理，Coordinator 进行全局监控和协调。
+
+## 关于零拷贝与 Apache Arrow
+
+Dora-rs 使用 Apache Arrow data format 来实现通信
+
+Apache Arrow data format 是一种高效的内存列式格式，dora-rs 通过使用 Apache Arrow data format 实现了不同语言实现的节点间的零拷贝数据通信。
+
+![Apache Arrow](../assets/posts/arrow.webp)
 
 ## dora-rs cli
 
@@ -95,6 +104,5 @@ $ dora start <PATH> --name <NAME> # 启动 Workflow, 但不运行节点
 $ dora logs [UUID_OR_NAME] <NAME> # [UUID_OR_NAME]是 Workflow 名称或 uuid, <NAME> 是节点名称
 $ dora list # 列出所有活动的 Workflow
 ```
-
-## 如何编写一个 Workflow ?
-
+!!! WARNING
+    目前 dora-rs 仍在快速迭代中，以上命令**不保证**在 dora-rs 之后的新版本仍然正常使用
