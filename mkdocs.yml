@@ -59,9 +59,6 @@ plugins:
       archive_date_format: MMMM YYYY
       archive_url_date_format: yyyy/MM
       post_date_format: full
-      categories_allowed:
-        - 生活
-        - Tech
       archive_toc: true
       categories_toc: true
       post_slugify: !!python/object/apply:ext.slugs.slugify
@@ -75,9 +72,6 @@ plugins:
       archive_date_format: MMMM YYYY
       archive_url_date_format: yyyy/MM
       post_date_format: full
-      categories_allowed:
-        - 生活
-        - Tech
       archive_toc: true
       categories_toc: true
       post_slugify: !!python/object/apply:ext.slugs.slugify
