@@ -124,7 +124,13 @@ nav:
   - About:
     - about.md
 
+extra_javascript:
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
 extra_css:
   - stylesheets/extra.css
+  - https://unpkg.com/katex@0/dist/katex.min.css
 
 copyright: <a href="https://icp.gov.moe/?keyword=20250039" target="_blank">萌ICP备20250039号</a>
