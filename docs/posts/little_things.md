@@ -7,12 +7,14 @@ authors:
   - ruri
 hero: assets/posts/Connecting.webp
 ---
-
 # 几件小事
 
 写在高考半年后。
+
 <!-- more -->
+
 ---
+
 ## 失眠
 
 高三最痛苦的一件事：失眠。
@@ -21,9 +23,7 @@ hero: assets/posts/Connecting.webp
 
 随后是第二晚、第三晚 ...
 
-漆黑的天花板、舍友鼾声、失意的模拟考试，也许都是压垮我的那根稻草。
-
-只有失眠过的人才能知道，在深夜，人能有多脆弱。
+漆黑的天花板、舍友鼾声、失意的模拟考试，也许吧。
 
 ---
 
@@ -68,7 +68,3 @@ hero: assets/posts/Connecting.webp
 那么，我做的足够好了吗？
 
 我不知道。
-
----
-
-(WIP)

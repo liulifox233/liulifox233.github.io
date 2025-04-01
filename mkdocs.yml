@@ -52,6 +52,7 @@ theme:
 plugins:
   - search
   - awesome-pages
+  - mkdocs-ja-ruby
   - blog:
       blog_toc: true
       blog_dir: .
@@ -121,6 +122,8 @@ nav:
     - records/index.md
   - Notes:
     - notes/index.md
+    - japanese:
+      - notes/japanese/plan.md
   - About:
     - about.md
 
