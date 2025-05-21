@@ -122,8 +122,11 @@ nav:
     - records/index.md
   - Notes:
     - notes/index.md
+    - database:
+      - notes/database/cap.md
     - japanese:
       - notes/japanese/plan.md
+      - notes/japanese/case-particles.md
   - About:
     - about.md
 
