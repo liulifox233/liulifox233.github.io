@@ -1,8 +1,8 @@
 site_name: Ruri's Blog
 site_description: 这里是流离的博客
-site_url: https://liulifox.top
+site_url: https://blog.meltyland.dev
 repo_url: https://github.com/liulifox233/mkblog
-repo_name: liulifox233/mkblog
+repo_name: liulifox233/liulifox233.github.io
 edit_uri_template: "edit/main/docs/{path}"
 
 theme:
