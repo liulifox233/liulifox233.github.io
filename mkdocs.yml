@@ -1,7 +1,7 @@
-site_name: Ruri's Blog
-site_description: 这里是流离的博客
+site_name: MeltyLand
+site_description: Welcome to the meltyland
 site_url: https://blog.meltyland.dev
-repo_url: https://github.com/liulifox233/mkblog
+repo_url: https://github.com/liulifox233/liulifox233.github.io
 repo_name: liulifox233/liulifox233.github.io
 edit_uri_template: "edit/main/docs/{path}"
 
@@ -107,6 +107,8 @@ markdown_extensions:
   - footnotes
   - md_in_html
   - pymdownx.details
+  - pymdownx.snippets
+  - pymdownx.tilde
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -114,6 +116,7 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - ext.chat
 
 nav:
   - Posts:
@@ -134,9 +137,14 @@ extra_javascript:
   - javascripts/katex.js
   - https://unpkg.com/katex@0/dist/katex.min.js
   - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+  - https://unpkg.com/d3@7/dist/d3.min.js
+  - javascripts/hpc-visualizations.js
+  - javascripts/chat.js
 
 extra_css:
   - stylesheets/extra.css
   - https://unpkg.com/katex@0/dist/katex.min.css
+  - stylesheets/hpc-visualizations.css
+  - stylesheets/chat.css
 
 copyright: <a href="https://icp.gov.moe/?keyword=20250039" target="_blank">萌ICP备20250039号</a>
