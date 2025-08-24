@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mkblog"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.6.18",
+    "mkdocs-awesome-pages-plugin>=2.10.1",
+    "mkdocs-ja-ruby>=1.0.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
