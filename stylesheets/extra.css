@@ -28,9 +28,9 @@
 [data-md-color-scheme="dark"] {
     --md-hue: 280;
     --md-default-fg-color: hsla(var(--md-hue), 75%, 95%, 1);
-    --md-default-fg-color--light: hsla(var(--md-hue), 75%, 90%, 0.62);
-    --md-default-fg-color--lighter: hsla(var(--md-hue), 75%, 90%, 0.32);
-    --md-default-fg-color--lightest: hsla(var(--md-hue), 75%, 90%, 0.12);
+    --md-default-fg-color--light: #c4c1d7;
+    --md-default-fg-color--lighter: #c4c1d7;
+    --md-default-fg-color--lightest: #c4c1d7;
     --md-default-bg-color: #2d3047;
     --md-default-bg-color--light: hsla(var(--md-hue), 15%, 21%, 0.54);
     --md-default-bg-color--lighter: hsla(var(--md-hue), 15%, 21%, 0.26);
