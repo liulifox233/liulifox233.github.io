@@ -1270,6 +1270,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      小规模优化
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1529,9 +1538,7 @@
 <h2 id="cos-sim">cos-sim<a class="headerlink" href="#cos-sim" title="Permanent link">&para;</a></h2>
 <p>这个题目的核心任务是，给我们 <code>N</code> 个 <code>D</code> 维的向量，要我们算出每个向量和其他所有向量的余弦相似度，然后找出最大的那四个。</p>
 <p>最直观、最暴力的想法，就是老老实实地写两层循环：外层循环遍历向量 <code>i</code>，内层循环遍历向量 <code>j</code>，然后在最里面根据公式计算 <code>i</code> 和 <code>j</code> 的相似度。这个算法的复杂度大概是 <code>O(N² * D)</code>。考虑到 <code>N</code> 最大能到 20000，<code>D</code> 是 4096，这个计算量是天文数字，肯定会超时。</p>
-<h4 id="_2">优化思路<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
-<p>我们的优化主要分三步走：首先在数学上“偷个懒”，然后选择了两条不同的计算路径，并最终根据实际测试，将它们组合成了一个混合策略</p>
-<p><strong>向量归一化</strong></p>
+<h3 id="_2">优化思路<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p>我们先看一下余弦相似度的公式：</p>
 <div class="arithmatex">\[
 \text{similarity}(A, B) = \frac{A \cdot B}{\|A\| \cdot \|B\|}
@@ -1547,6 +1554,7 @@
 <p>之后的问题就是如何高效计算 N*N 的点积矩阵，我首先想到了这个方式：</p>
 <p>把 <code>N</code> 个 <code>D</code> 维向量看成一个 <code>N x D</code> 的矩阵 <code>M</code>。那么，<code>M</code> 乘以它自己的转置 <code>M^T</code>，得到的结果 <code>S = M * M^T</code> 是一个 <code>N x N</code> 的矩阵。这个结果矩阵 <code>S</code> 里面，<code>S_ij</code> 的值正好就是向量 <code>i</code> 和向量 <code>j</code> 的点积</p>
 <p>这个操作可以通过 BLAS 库里的 <code>cblas_sgemm</code> 函数（通用矩阵乘法）一步完成</p>
+<h3 id="_3">小规模优化<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>然后就能开香槟...不对，怎么小矩阵算得这么慢呢？暴力逐点计算在小规模反而更快！？</p>
 <p>那就根据 N 的大小判断使用暴力计算还是矩阵乘法！</p>
 <p>写了一个 <code>benchmark.cpp</code> 程序在不同的 <code>N</code> 值下对这两个方案进行了性能测试</p>
