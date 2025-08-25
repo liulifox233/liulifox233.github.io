@@ -95,7 +95,7 @@
 /* 日间模式特殊样式 */
 [data-md-color-scheme="light"] .chat-message-right .chat-bubble {
   background-color: var(--md-primary-fg-color);
-  color: var(--md-primary-bg-color);
+  /* color: var(--md-primary-bg-color); */
 }
 
 /* 夜间模式特殊样式 */
@@ -108,6 +108,37 @@
 [data-md-color-scheme="dark"] .chat-message-right .chat-bubble {
   background-color: var(--md-primary-fg-color--dark);
   color: var(--md-default-fg-color);
+}
+
+/* 动画效果 */
+.chat-message {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.chat-message.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 头像动画 */
+.chat-avatar {
+  transition: transform 0.6s ease;
+}
+
+.chat-message.animate .chat-avatar {
+  transform: scale(1.05);
+}
+
+/* 气泡动画 */
+.chat-bubble {
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.chat-message.animate .chat-bubble {
+  transform: scale(1.01);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
 }
 
 /* 响应式设计 */
