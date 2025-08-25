@@ -14,13 +14,16 @@ hero: assets/posts/kotoha.webp
 
     都去听 Kotoha Cover 的 [#あくあ色ぱれっと](https://www.youtube.com/watch?v=UdXxY3kLdVc)
     
-<!-- more -->
 
 因为是一边调整生物钟一边打比赛（虽然到最后也没成功把生物钟调整回来），凌晨上分应该很诡异吧www
 
 最后拿到了 Rank 2 的成绩，其中 `md5-new` 和 `traffic-detector` 都拿到了 SOTA 的成绩，总体来说还是很满意的吧
 
+<!-- more -->
+
 ![](../assets/posts/rank.webp)
+
+本次比赛我使用的代码均可在[https://git.byr.moe/LiuliFox/zxhpc-writeup](https://git.byr.moe/LiuliFox/zxhpc-writeup)查看
 
 ## 环境信息
 
