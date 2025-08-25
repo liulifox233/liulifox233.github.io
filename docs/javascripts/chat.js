@@ -19,7 +19,44 @@ function initializeChat() {
       } else if (message.classList.contains('chat-right')) {
         message.classList.add('chat-message-right');
       }
+      
+      // 初始隐藏消息，准备动画
+      message.classList.add('chat-message');
     });
+  });
+  
+  // 添加滚动监听
+  setupChatAnimation();
+}
+
+// 设置聊天消息动画
+function setupChatAnimation() {
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.3 // 当30%的消息可见时触发
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // 延迟显示消息，创建逐个出现的效果
+        const messages = entry.target.querySelectorAll('.chat-message');
+        messages.forEach((message, index) => {
+          setTimeout(() => {
+            message.classList.add('animate');
+          }, index * 300); // 每个消息延迟300ms
+        });
+        
+        // 停止观察这个容器
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  
+  // 观察所有聊天容器
+  document.querySelectorAll('.chat-container').forEach(container => {
+    observer.observe(container);
   });
 }
 

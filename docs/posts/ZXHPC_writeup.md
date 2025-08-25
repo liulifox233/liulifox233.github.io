@@ -10,9 +10,9 @@ hero: assets/posts/kotoha.webp
 ---
 # ZXHPC 2025 Writeup
 ???+ TIP
-    Kotoha かわすぎ😭
+    Kotoha かわすぎ😭[^1]
 
-    都去听 Kotoha Cover 的 [#あくあ色ぱれっと](https://www.youtube.com/watch?v=UdXxY3kLdVc) 😡
+    都去听 Kotoha Cover 的 [#あくあ色ぱれっと](https://www.youtube.com/watch?v=UdXxY3kLdVc)
     
 <!-- more -->
 
@@ -504,3 +504,577 @@ $$
     ```c++
     --8<-- "docs/code/md5-new.cpp"
     ```
+
+## llm-challenge
+
+??? quote "题面 llm-challenge"
+    **LLM挑战**
+
+    **注意：本题只能在 Linux x86 系统上运行**
+
+    **题目描述**
+
+    请选择合适的 LLM 模型及推理系统，完成给定的100道测试题。你需要兼顾运行时间与正确率，以获得尽可能高的分数。
+
+    你可以使用除了打表和调用外部LLM以外的各种方法优化运行时间与测试得分，例如：
+
+    - 使用高效推理框架
+    - 使用量化、稀疏化模型
+    - 在问题基础上添加其他prompt
+    - 使用思维链
+    - 调整从模型回答中提取答案的方式
+    - 只选择部分问题作答
+    - 提前完成模型加载，仅在`zxscorer`中处理输入
+
+    **输入格式**
+
+    输入为一系列四选一的单选题，各题目之间以连续两个换行符分隔（保证题目内不存在连续两个换行符）。
+
+    实际输入中每个题目的平均字符数为473。
+
+    **输出格式**
+
+    输出需按照题目输入的顺序，每行填写一个字符（A/B/C/D），以此表示对应题目的答案。
+
+    **输入样例**
+
+    示例仅包含5道题目，实际输入包含100道题目。
+
+    ```text
+    A person walked 3 miles to the east, then turned north and walked 10 miles, then turned west and walked 6 miles, and finally turned south and walked 16 miles. Approximately how far is the person from his starting point in miles?
+    A. 3.4
+    B. 6.7
+    C. 9.2
+    D. 12.8
+
+    This question refers to the following information.
+    "We conclude that, in the field of public education, the doctrine of "separate but equal" has no place. Separate educational facilities are inherently unequal. Therefore, we hold that the plaintiffs and others similarly situated for whom the actions have been brought are, by reason of the segregation complained of, deprived of the equal protection of the laws guaranteed by the Fourteenth Amendment."
+    Brown v. Board of Education, 1954
+    Desegregation of schools was, in part, a response to unfulfilled promises from which of the following initiatives?
+    A. The Great Society
+    B. The Square Deal
+    C. The New Deal
+    D. Reconstruction
+
+    Statement 1| For any two variables x and y having joint distribution p(x, y), we always have H[x, y] ≥ H[x] + H[y] where H is entropy function. Statement 2| For some directed graphs, moralization decreases the number of edges present in the graph.
+    A. True, True
+    B. False, False
+    C. True, False
+    D. False, True
+
+    This question refers to the following information.
+    "To slacken the tempo would mean falling behind. And those who fall behind get beaten. But we do not want to be beaten. No, we refuse to be beaten! One feature of the history of old Russia was the continual beatings she suffered because of her backwardness. She was beaten by the Mongol khans. She was beaten by the Turkish beys. She was beaten by the Swedish feudal lords. She was beaten by the Polish and Lithuanian gentry. She was beaten by the British and French capitalists. She was beaten by the Japanese barons. All beat her––because of her backwardness, because of her military backwardness, cultural backwardness, political backwardness, industrial backwardness, agricultural backwardness. They beat her because it was profitable and could be done with impunity. You remember the words of the pre-revolutionary poet: "You are poor and abundant, mighty and impotent, Mother Russia." Those gentlemen were quite familiar with the verses of the old poet. They beat her, saying: "You are abundant," so one can enrich oneself at your expense. They beat her, saying: "You are poor and impotent," so you can be beaten and plundered with impunity. Such is the law of the exploiters––to beat the backward and the weak. It is the jungle law of capitalism. You are backward, you are weak––therefore you are wrong; hence you can be beaten and enslaved. You are mighty––therefore you are right; hence we must be wary of you.
+    That is why we must no longer lag behind."
+    Joseph Stalin, speech delivered at the first All-Union Conference of Leading Personnel of Socialist Industry, February 4, 1931
+    Stalin's speech is most strongly influenced by which of the following?
+    A. Appeasement
+    B. Fascism
+    C. Communism
+    D. Secret treaties
+
+    Which of the following forms of dementia has the highest prevalence rate?
+    A. Alzheimer's
+    B. Vascular
+    C. Parkinson's
+    D. Fronto-temporal lobe
+    ```
+
+    **输出样例**
+
+    ```text
+    B
+    D
+    B
+    C
+    A
+    ```
+
+    **评分标准**
+
+    若运行时间为$T$分钟，则运行时间部分的得分为
+
+    $$
+    S_1 = \begin{cases}
+    100 &, T \leq 0.5 \\
+    100\left({\log\left(\frac{T}{30}\right)}/{\log\left(\frac{0.5}{30}\right)}\right) &, 0.5 < T < 30 \\
+    0 &, T \geq 30
+    \end{cases}
+    $$
+
+    若答案正确的问题数量为$C$，则正确率部分的得分为
+
+    $$
+    S_2 = \frac{100}{65}\max(C - 35, 0)
+    $$
+
+    最终得分为两部分得分的几何平均值，即$S=\sqrt{S_1S_2}$，并根据全部选手的最高分进行归一化，线性缩放到满分 100 分。
+
+这一题大部分的难度其实是在配环境上，但我选择了一个取巧的方式：使用 [llamafile](https://github.com/Mozilla-Ocho/llamafile)
+
+???+ quote "README.md"
+    **llamafile lets you distribute and run LLMs with a single file. ([announcement blog post](https://hacks.mozilla.org/2023/11/introducing-llamafile/))**
+
+    Our goal is to make open LLMs much more
+    accessible to both developers and end users. We're doing that by
+    combining [llama.cpp](https://github.com/ggerganov/llama.cpp) with [Cosmopolitan Libc](https://github.com/jart/cosmopolitan) into one
+    framework that collapses all the complexity of LLMs down to
+    a single-file executable (called a "llamafile") that runs
+    locally on most computers, with no installation.<br/><br/>
+
+一键运行，在服务器上可以无须配置任何环境直接运行
+
+对于模型，我尝试了这几个模型
+
+- [https://huggingface.co/Mozilla/Qwen2.5-7B-Instruct-1M-llamafile](https://huggingface.co/Mozilla/Qwen2.5-7B-Instruct-1M-llamafile)
+
+- [https://huggingface.co/Mozilla/Qwen3-4B-llamafile](https://huggingface.co/Mozilla/Qwen3-4B-llamafile)
+
+- [https://huggingface.co/Mozilla/Qwen2.5-0.5B-Instruct-llamafile](https://huggingface.co/Mozilla/Qwen2.5-0.5B-Instruct-llamafile)
+
+- [https://huggingface.co/Mozilla/Llama-3.2-1B-Instruct-llamafile](https://huggingface.co/Mozilla/Llama-3.2-1B-Instruct-llamafile)
+
+- [https://huggingface.co/zai-org/glm-4-9b](https://huggingface.co/zai-org/glm-4-9b)
+
+其中 glm-4-9b 的正确率最高，一般能到 80% 左右，但速度比 Qwen2.5-7B-Instruct-1M-llamafile 慢了非常多
+
+Qwen3 系列因为思维链的关系，输出不易调整，综合考虑后排除了 Qwen3 系列模型
+
+综合考虑，Qwen2.5-7B-Instruct-1M-llamafile 是得分最高的模型，取得了最高的成绩（58.16pts）
+
+我考虑过限制 max token 为 1 并用 grammar 限制输出为 A/B/C/D，但正确率太低得不偿失，故没有继续深入调试
+
+```
+Run log:
+Test case: Test 1
+Duration: 158.023s
+Diff result: 72
+Tip: 
+Score: 58.15746228385942
+Passed
+```
+
+??? success "最终优化代码 (58.16pts)"
+    ```c++
+    --8<-- "docs/code/llm.py"
+    ```
+
+## traffic-detector
+
+??? quote "题面 traffic-detector"
+    **Traffic Detector**
+
+    **注意：本题无法在本地测试，只能在集群环境测试或提交**
+
+    **题目描述**
+
+    恶意流量检测是网络空间安全中的重要研究课题，如何分析大量的网络数据是其中的一个重难点。现有纯文本格式的网络流量，包含有两种协议的流量数据：TCP/DNS。具体的格式如下：
+
+    - TCP流量：`时间戳 TCP 源IP 目的IP 源端口 目的端口 flags 数据长度 十六进制数据`
+    - DNS流量：`时间戳 DNS 源IP 目的IP 源端口 目的端口 域名长度 域名`
+
+    输入数据按照时间戳增序给出。
+
+    在正常的流量中，混杂有两种恶意流量：TCP端口扫描和DNS隧道。在这里我们使用最简单的模型，将所有“源IP只发送一个SYN包便没有后续流量”的流视为端口扫描，将所有域名前缀大于等于30的DNS查询视为DNS隧道。请你统计所有的恶意行为，并给出统计数据
+
+    请不要根据输入数据的其他无关特征进行优化，如DNS隧道对应的主域名与正常DNS请求的主域名差异等。请严格按照以上的规则进行统计，并完成文件IO、算法相关的优化。
+
+    **输出格式**
+
+    `IP 恶意行为 发生次数`，使用一个空格作为分隔，其中恶意行为是`portscan`/`tunnelling`中的一个，发生次数对于端口扫描而言是所有端口扫描TCP流的个数，对于DNS隧道而言是所有通过DNS隧道传输的数据总量（即子域名前缀的长度，按字符计）。题目对输出数据的顺序有要求，需要先输出所有`portscan`统计，再输出所有`tunnelling`统计，同时每份统计按照字典序升序对IP进行排序（如`1.1.1.7` < `1.1.1.70` < `1.1.1.8`）。
+
+    **样例**
+
+    **输入样例**
+    ```text
+    0.01 TCP 114.5.1.4 192.168.1.100 1919 810 SYN 0
+    0.02 DNS 192.168.1.1 8.8.8.8 61212 53 42 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.example.com
+    ```
+    **输出样例**
+    ```text
+    114.5.1.4 portscan 1
+    192.168.1.1 tunnelling 30
+    ```
+
+    **评分规则**
+
+    $$
+    \text{score} = 25\cdot\log_2\left(\frac{300\text{s}}{T}\right)
+    $$
+
+    **参考程序**
+
+    ```C++
+    #include <iostream>
+    #include <fstream>
+    #include <sstream>
+    #include <map>
+    #include <vector>
+    #include <string>
+
+    struct Packet {
+        double timestamp;
+        std::string protocol;
+        std::string src_ip, dst_ip;
+        int src_port = -1, dst_port = -1;
+        std::string flags;
+        int data_len = 0;
+        std::string data;
+    };
+
+    Packet parse_line(const std::string& line) {
+        Packet pkt;
+        std::istringstream iss(line);
+        iss >> pkt.timestamp >> pkt.protocol >> pkt.src_ip >> pkt.dst_ip;
+        if (pkt.protocol == "TCP" || pkt.protocol == "DNS") {
+            iss >> pkt.src_port >> pkt.dst_port;
+            if (pkt.protocol == "TCP") {
+                iss >> pkt.flags;
+            }
+            iss >> pkt.data_len;
+            if (iss.peek() == ' ' || iss.peek() == '\t') iss.get();
+            std::getline(iss, pkt.data);
+            if (!pkt.data.empty() && pkt.data[0] == ' ') pkt.data.erase(0, 1);
+        }
+        return pkt;
+    }
+
+    std::string get_dns_prefix(const std::string& domain) {
+        size_t dot = domain.find('.');
+        if (dot != std::string::npos) return domain.substr(0, dot);
+        return "";
+    }
+
+    int main() {
+        std::ifstream fin("network_traffic.txt");
+        if (!fin) {
+            std::cerr << "读取network_traffic.txt失败!\n";
+            return 1;
+        }
+
+        struct FiveTuple {
+            std::string src_ip, dst_ip;
+            int src_port, dst_port;
+        };
+        auto tuple_str = [](const FiveTuple& t) {
+            return t.src_ip + "|" + t.dst_ip + "|" + std::to_string(t.src_port) + "|" + std::to_string(t.dst_port);
+        };
+
+        // 端口扫描
+        std::map<std::string, std::vector<Packet>> syn_flows;
+
+        // DNS隧道
+        std::map<std::string, int> dnstunnel_count; // src_ip -> 次数
+
+        std::string line;
+        while (std::getline(fin, line)) {
+            if (line.empty()) continue;
+            Packet pkt = parse_line(line);
+
+            // 端口扫描
+            if (pkt.protocol == "TCP") {
+                FiveTuple key{pkt.src_ip, pkt.dst_ip, pkt.src_port, pkt.dst_port};
+                syn_flows[tuple_str(key)].push_back(pkt);
+            }
+            // DNS隧道
+            else if (pkt.protocol == "DNS" && !pkt.data.empty()) {
+                std::string prefix = get_dns_prefix(pkt.data);
+                if (prefix.length() >= 30) {
+                    dnstunnel_count[pkt.src_ip]+=prefix.length();
+                }
+            }
+        }
+
+        // 输出端口扫描
+        std::map<std::string, int> portscan_ip_count;
+        for (const auto& kv : syn_flows) {
+            const std::vector<Packet>& pkts = kv.second;
+            if (pkts.size() == 1 && pkts[0].flags == "SYN") {
+                portscan_ip_count[pkts[0].src_ip]++;
+            }
+        }
+
+        // 统一输出，优先端口扫描，后隧道
+        for (const auto& kv : portscan_ip_count) {
+            std::cout << kv.first << " portscan " << kv.second << std::endl;
+        }
+        for (const auto& kv : dnstunnel_count) {
+            std::cout << kv.first << " tunnelling " << kv.second << std::endl;
+        }
+
+        return 0;
+    }
+    ```
+
+这个程序的行为非常复杂，我们先看看 profile 结果
+
+本次比赛我主要使用 [samply](https://github.com/mstange/samply) 作为 profile 工具进行，这个工具能采样程序运行数据并用 `profiler.firefox.com` 作为前端画出直观的火焰图并显示热点代码
+
+![](../assets/posts/profile.webp)
+
+可以发现大部分的时间都是花在 `std::map` 的插入与查找操作上，`std::map` 的内部实现是红黑树，对于大量插入查找的行为，hashmap 才是更合适的数据结构
+
+### traffic-detector Ver1.0
+
+查看这个 [Hashmaps Benchmarks](https://martin.ankerl.com/2019/04/01/hashmap-benchmarks-05-conclusion/) ，考虑到静态链接到程序中的难度，我选择了 `absl::flat_hash_map`
+
+为了优化 hashmap 速度，我将原来由多个字符串拼接成的 string key (src_ip + "|" + ...) 替换为一个自定义的 FiveTuple 结构体，减少了字符串拼接操作
+
+分析题目，其实我们不需要完整解析和储存每一行，只需要在协议是 "TCP" 或 "DNS" 才去解析后续的字段（如端口、Flags、域名等）。对于不关心的协议，解析工作在协议名之后就停止了
+
+通过这些优化，我们的程序从需要 `233.565s` 加速到了只需需要 `86.318s`，加速约 2.7倍
+
+??? success "traffic-detector Ver1.0"
+    ```c++
+    --8<-- "docs/code/td1.cpp"
+    ```
+
+### traffic-detector Ver2.0
+
+再次查看火焰图
+
+![](../assets/posts/profile2.webp)
+
+我们发现 `std::getline` 和解析占用了大量时间，因此我们可以考虑优化一下 IO 性能
+
+我们可以使用更快的 `mmap` 将文件直接映射到进程的虚拟地址空间，代替传统的 std::ifstream 和 std::getline，此时操作系统会负责将文件内容按需载入内存
+
+我们不使用 `std::string` 解析字符串，而是改成 `const char*` 指针进行手动解析，零内存拷贝
+
+我们还发现，虽然题目要求将 ip 按照字符串顺序排序，可是我们完全可以自己实现一个“伪字符串排序”，将 ip 用 u32 格式储存，用这个自定义排序函数让 ip 按照字符串排序，这样可以极大加快 hashmap 的速度
+
+??? example "ip_str_less"
+    ```cpp hl_lines="2 3 7 11 15 17 21 25 27 31 33 37 39 43 45 64 65 68 69 72 73"
+    inline int compare_num_str(int x, int y) {
+        if (x < 10) {
+            if (y < 10) {
+                return x - y;
+            } else if (y < 100) {
+                int cmp = x - (y / 10);
+                if (cmp != 0) return cmp;
+                return -1;
+            } else {
+                int cmp = x - (y / 100);
+                if (cmp != 0) return cmp;
+                return -1;
+            }
+        } else if (x < 100) {
+            if (y < 10) {
+                int cmp = (x / 10) - y;
+                if (cmp != 0) return cmp;
+                return 1;
+            } else if (y < 100) {
+                int cmp = (x / 10) - (y / 10);
+                if (cmp != 0) return cmp;
+                return (x % 10) - (y % 10);
+            } else {
+                int cmp = (x / 10) - (y / 100);
+                if (cmp != 0) return cmp;
+                cmp = (x % 10) - (y / 10 % 10);
+                if (cmp != 0) return cmp;
+                return -1;
+            }
+        } else {
+            if (y < 10) {
+                int cmp = (x / 100) - y;
+                if (cmp != 0) return cmp;
+                return 1;
+            } else if (y < 100) {
+                int cmp = (x / 100) - (y / 10);
+                if (cmp != 0) return cmp;
+                cmp = (x / 10 % 10) - (y % 10);
+                if (cmp != 0) return cmp;
+                return 1;
+            } else {
+                int cmp = (x / 100) - (y / 100);
+                if (cmp != 0) return cmp;
+                cmp = (x / 10 % 10) - (y / 10 % 10);
+                if (cmp != 0) return cmp;
+                return (x % 10) - (y % 10);
+            }
+        }
+    }
+
+    // 比较两个IP的字典序（考虑点号）
+    inline bool ip_str_less(uint32_t ip1, uint32_t ip2) {
+        int a1 = (ip1 >> 24) & 0xFF;
+        int b1 = (ip1 >> 16) & 0xFF;
+        int c1 = (ip1 >> 8) & 0xFF;
+        int d1 = ip1 & 0xFF;
+
+        int a2 = (ip2 >> 24) & 0xFF;
+        int b2 = (ip2 >> 16) & 0xFF;
+        int c2 = (ip2 >> 8) & 0xFF;
+        int d2 = ip2 & 0xFF;
+
+        int cmp = compare_num_str(a1, a2);
+        if (cmp < 0) return true;
+        if (cmp > 0) return false;
+
+        cmp = compare_num_str(b1, b2);
+        if (cmp < 0) return true;
+        if (cmp > 0) return false;
+
+        cmp = compare_num_str(c1, c2);
+        if (cmp < 0) return true;
+        if (cmp > 0) return false;
+
+        cmp = compare_num_str(d1, d2);
+        return cmp < 0;
+    }
+    ```
+
+除此之外，我们实际上不需要完整储存一个 TCP 流的全部 flags，只需要用一个 int 来标记状态：1 代表只看到了 SYN 包（潜在的 portscan），-1 代表看到了后续包（正常通信或已结束）
+
+但是到目前为止，我们的程序还是一个单线程程序，并没有发挥集群的多核优势
+
+于是我们又做了以下优化
+
+- 代码不再逐行读取文件，而是将整个文件内容（通过 mmap 映射到内存）分割成多个块（chunks）。每个线程负责处理一个独立的块
+
+- 每个线程拥有自己的哈希表 (thread_syn_flows, thread_dnstunnel) 来存储中间结果，避免了线程间因争抢锁而造成的性能瓶颈，直到所有线程处理完毕后才进行一次性的结果合并并排序结果
+
+通过这些优化，我们的程序从需要 `86.318s` 加速到了只需需要 `9.473s`，加速约 9.1 倍
+
+??? success "traffic-detector Ver2.0"
+    ```c++
+    --8<-- "docs/code/td2.cpp"
+    ```
+
+### traffic-detector Ver3.0
+
+```chat
+[left] [https://avatars.githubusercontent.com/u/191038400] 流离流离，你这个 ip_str_less 虽然好，但是不是分支有点太多了？
+[right] [https://avatars.githubusercontent.com/u/88608708] 确实确实，这么多分支对 CPU 的 `分支预测` 太不友好了，但是没关系，LUT 会出手☝️🤓
+```
+
+在原来的 `ip_str_less` 函数中，每比较一个 ip 至少需要 8 个分支，这太慢了
+
+为了解决这个问题，我们引入编译期生成查找表 (Look-Up Table, LUT)： 通过 constexpr 函数 generate_lex_lut 在编译时就生成一个全局数组 g_lex_lut， 将0-255的数字映射到它们的字典序排名。例如，g_lex_lut[10] 的值会大于 g_lex_lut[2]。这样，原本复杂的字符串比较就变成了 O(1) 的数组查询
+
+??? example "ip_str_less"
+    ```c++
+    constexpr int compare_num_str(int x, int y) {
+        if (x < 10) {
+            if (y < 10) {
+                return x - y;
+            } else if (y < 100) {
+                int cmp = x - (y / 10);
+                if (cmp != 0) return cmp;
+                return -1;
+            } else {
+                int cmp = x - (y / 100);
+                if (cmp != 0) return cmp;
+                return -1;
+            }
+        } else if (x < 100) {
+            if (y < 10) {
+                int cmp = (x / 10) - y;
+                if (cmp != 0) return cmp;
+                return 1;
+            } else if (y < 100) {
+                int cmp = (x / 10) - (y / 10);
+                if (cmp != 0) return cmp;
+                return (x % 10) - (y % 10);
+            } else {
+                int cmp = (x / 10) - (y / 100);
+                if (cmp != 0) return cmp;
+                cmp = (x % 10) - (y / 10 % 10);
+                if (cmp != 0) return cmp;
+                return -1;
+            }
+        } else {
+            if (y < 10) {
+                int cmp = (x / 100) - y;
+                if (cmp != 0) return cmp;
+                return 1;
+            } else if (y < 100) {
+                int cmp = (x / 100) - (y / 10);
+                if (cmp != 0) return cmp;
+                cmp = (x / 10 % 10) - (y % 10);
+                if (cmp != 0) return cmp;
+                return 1;
+            } else {
+                int cmp = (x / 100) - (y / 100);
+                if (cmp != 0) return cmp;
+                cmp = (x / 10 % 10) - (y / 10 % 10);
+                if (cmp != 0) return cmp;
+                return (x % 10) - (y % 10);
+            }
+        }
+    }
+
+    template<typename T>
+    constexpr void constexpr_swap(T& a, T& b) {
+        T temp = a;
+        a = b;
+        b = temp;
+    }
+
+    constexpr auto generate_lex_lut() {
+        std::array<int, 256> nums{};
+        std::array<int, 256> lut{};
+        for (int i = 0; i < 256; ++i) nums[i] = i;
+        for (int i = 0; i < 256; ++i) {
+            int min_idx = i;
+            for (int j = i + 1; j < 256; ++j) {
+                if (compare_num_str(nums[j], nums[min_idx]) < 0) min_idx = j;
+            }
+            if (min_idx != i) constexpr_swap(nums[i], nums[min_idx]);
+        }
+        for (int rank = 0; rank < 256; ++rank) lut[nums[rank]] = rank;
+        return lut;
+    }
+    constexpr auto g_lex_lut = generate_lex_lut();
+
+    inline bool ip_str_less(uint32_t ip1, uint32_t ip2) {
+        int a1 = (ip1 >> 24) & 0xFF, b1 = (ip1 >> 16) & 0xFF, c1 = (ip1 >> 8) & 0xFF, d1 = ip1 & 0xFF;
+        int a2 = (ip2 >> 24) & 0xFF, b2 = (ip2 >> 16) & 0xFF, c2 = (ip2 >> 8) & 0xFF, d2 = ip2 & 0xFF;
+        if (g_lex_lut[a1] != g_lex_lut[a2]) return g_lex_lut[a1] < g_lex_lut[a2];
+        if (g_lex_lut[b1] != g_lex_lut[b2]) return g_lex_lut[b1] < g_lex_lut[b2];
+        if (g_lex_lut[c1] != g_lex_lut[c2]) return g_lex_lut[c1] < g_lex_lut[c2];
+        return g_lex_lut[d1] < g_lex_lut[d2];
+    }
+    ```
+
+我们同时也可以替换掉原来的 `std::sort`，使用 “排序键”，这个键的构造方式保证了键的数值大小顺序是我们自定义的字典序
+
+做完这个优化后我们发现，程序的主要瓶颈是并行部分结束后的合并阶段，这个合并阶段只能串行处理
+
+因此我们将这个过程优化为增量式并行合并
+
+- 创建了固定数量的全局“分片”（global_syn_shards, global_dns_shards），例如1024个。每个分片都是一个独立的 hash_map，并配有一个独立的 mutex 锁
+
+- 在每个线程内部，使用 thread_local 关键字创建了与全局分片同样结构的本地分片。在核心的日志解析阶段，所有操作都在线程局部缓存上进行，完全无锁
+
+- 当一个线程处理完自己的数据块后，它会遍历自己的本地分片。对于每个本地分片，它会获取对应全局分片的锁，然后将数据合并进去。因为有1024个分片和锁，不同线程同时需要锁定同一个分片的概率大大降低，锁竞争被降到了最低
+
+- 使用 #pragma omp parallel for 来并行处理全局分片。每个线程负责一部分分片的统计工作，将结果存入线程自己的局部 hash_map。最后，通过 #pragma omp critical 临界区将各个线程的局部统计结果安全地合并到最终的总表中
+
+通过这些优化，我们的程序从需要 `9.473` 加速到了只需需要 `1.721s`，加速约 5.5 倍
+
+总结下来，我们所做的三阶段优化，将程序从需要 `233.565s` 加速到了只需要 `1.721s`，总共加速约 135.7 倍，可喜可贺可喜可贺
+
+??? success "最终优化代码 (196.6pts)"
+    ```c++
+    --8<-- "docs/code/td3.cpp"
+    ```
+
+## 后记
+
+我在比赛时**巨量**使用了 LLM，几乎所有代码都是我提供思路，由 LLM 实际编写的，感谢以下模型对我的鼎力支持
+
+- Qwen3-235B-A22B-Thinking-2507
+
+- DeepSeek-V3.1
+
+- Gemini 2.5 pro
+
+- GPT 5
+
+- Grok 4
+
+- Claude Sonnet 4
+
+
+
+[^1]: kotoha ちゃん真的很可爱
