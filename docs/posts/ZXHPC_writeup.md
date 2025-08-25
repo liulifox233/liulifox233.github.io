@@ -76,7 +76,154 @@ Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca 
 
 `traffic-detector` 为本机编译静态链接，上传二进制文件
 
+## a-plus-b
+
+??? quote "题面 a-plus-b"
+    **A+B Problem**
+
+    **题目内容**
+
+    为了帮助选手熟悉比赛环境和评分器，我们准备了一道简单的题目。通过这道题，你可以熟悉 slurm 环境和评分、提交流程。
+
+    给定两个整数 A 和 B，请计算它们的和。
+
+    **输入格式**
+
+    输入包含一行，包含两个整数 A 和 B ($$1 \le A, B \le 10^9$$)。
+
+    **输出格式**
+
+    输出一个整数，表示 A 和 B 的和。
+
+    **样例**
+
+    **输入样例**
+    ```text
+    3 5
+    ```
+    **输出样例**
+    ```text
+    8
+    ```
+    **评分标准**
+    两个测试点，每个 5 分，共 10 分。
+
+    **其他**
+
+    关于评分器的使用方法，见[评分器文档](/pages/scorer)。
+
+签到一下
+
+```c++
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a, b;
+    cin >> a >> b;
+    cout << a + b;
+    return 0;
+}
+```
+
 ## cos-sim
+
+??? quote "题面 cos-sim"
+    **Cosine Similarity**
+
+    **注意：本题只能在 Linux x86 系统上运行**
+
+    **题目内容**
+
+    余弦相似度是衡量两个向量在高维空间中方向相似性的指标，它通过计算两个向量夹角的余弦值来判断它们的相似程度，数值范围在 $[-1, 1]$ 之间。其定义为：
+
+    $$
+    \text{cosine\_similarity}(A, B) = \frac{A \cdot B}{\|A\| \|B\|} = \frac{\sum_{i=1}^{D} A_i B_i}{\sqrt{\sum_{i=1}^{D} A_i^2} \sqrt{\sum_{i=1}^{D} B_i^2}}
+    $$
+
+    现在给定 $N$ 个 $D$ 维向量，求这些向量两两之间的余弦相似度。
+
+    为了减少输出数据量，你只需要输出每个向量除其自身以外余弦相似度最大的四个向量对应的值。
+
+    你的答案被视为正确，当且仅当每个输出数值与标准结果的相对或绝对误差小于 $10^{-6}$。
+
+    **输入格式**
+
+    通过标准输入输入小端序二进制串，可参考示例代码。
+
+    首先是两个 `int32`，分别表示 $N$ 和 $D$。
+
+    接下来是 $N \times D$ 个 `float32`，表示 $N$ 个 $D$ 维向量。
+
+    **输出格式**
+
+    通过标准输出输出小端序二进制串，可参考示例代码。
+
+    输出 $4N$ 个 `float32`，表示每个向量除其自身以外余弦相似度最大的四个向量对应的值。
+
+    **评分标准**
+
+    共四个测试点。
+
+    | 测试点 | 分值 | $N$ | $D$ | $T_\text{std}$ | $T_\text{max}$ |
+    |--------|------|-----|-----|---------|---------|
+    | 1      | 25   | 1000 | 4096  | 0.1s      | 10s      |
+    | 2      | 25   | 5000 | 4096  | 0.25s     | 120s      |
+    | 3      | 25   | 10000| 4096  | 0.6s      | 120s      |
+    | 4      | 25   | 20000| 4096  | 1.8s      | 120s      |
+
+    若一个测试点运行时间为 $T$，则该测试点分值为
+
+    $$
+    \text{score} = \begin{cases}
+    25 &, T \leq T_\text{std} \\
+    25\left({\log\left(\frac{T}{T_\text{max}}\right)}/{\log\left(\frac{T_\text{std}}{T_\text{max}}\right)}\right) &, T_\text{std} < T < T_\text{max} \\
+    0 &, T \geq T_\text{max}
+    \end{cases}
+    $$
+
+    **示例程序**
+
+    ```cpp
+    #include <algorithm>
+    #include <cmath>
+    #include <iostream>
+    #include <vector>
+    #include <cstdint>
+
+    float cosine_similarity(const float *a, const float *b, int D) {
+        float dot_product = 0.0f;
+        float sum_a2 = 0.0f;
+        float sum_b2 = 0.0f;
+        for (int i = 0; i < D; ++i) {
+            dot_product += a[i] * b[i];
+            sum_a2 += a[i] * a[i];
+            sum_b2 += b[i] * b[i];
+        }
+        return dot_product / (std::sqrt(sum_a2) * std::sqrt(sum_b2) + 1e-12);
+    }
+
+    int main() {
+        uint32_t N, D;
+        std::cin.read(reinterpret_cast<char *>(&N), sizeof(N));
+        std::cin.read(reinterpret_cast<char *>(&D), sizeof(D));
+        std::vector<float> data(N * D);
+        std::cin.read(reinterpret_cast<char *>(data.data()), N * D * sizeof(float));
+
+        for (int i = 0; i < N; ++i) {
+            std::vector<float> cosine_sim(N);
+            for (int j = 0; j < N; ++j) {
+                cosine_sim[j] = cosine_similarity(data.data() + i * D, data.data() + j * D, D);
+            }
+            std::partial_sort(cosine_sim.begin(), cosine_sim.begin() + 5, cosine_sim.begin() + N, std::greater<float>());
+            std::cout.write(reinterpret_cast<char *>(cosine_sim.data() + 1), 4 * sizeof(float));
+        }
+
+        return 0;
+    }
+    ```
+
+    该代码仅支持小端序设备。
 
 这个题目的核心任务是，给我们 `N` 个 `D` 维的向量，要我们算出每个向量和其他所有向量的余弦相似度，然后找出最大的那四个。
 
@@ -119,7 +266,7 @@ $$
 
 写了一个 `benchmark.cpp` 程序在不同的 `N` 值下对这两个方案进行了性能测试
 
-??? note "benchmark.cpp"
+??? example "benchmark.cpp"
     ```c++
     --8<-- "docs/code/benchmark.cpp"
     ```
@@ -151,9 +298,14 @@ N=4000 brute=1020 ms  gemm=73 ms  -> faster: gemm
 
 ~~1pts差在N=1000时，懒得凹分~~
 
+??? success "最终优化代码 (99.0pts)"
+    ```c++
+    --8<-- "docs/code/cos-sim.cpp"
+    ```
+
 ## 	md5-bf
 
-??? note "md5-bf"
+??? quote "md5-bf"
     **MD5 Brute Force**
 
     **题目内容**
@@ -266,7 +418,7 @@ Github 搜索 `simd` 和 `md5`，第一个出现的就是 [minio/md5-simd](https
 
 题目在比赛期间更新了，标为`md5-bf`的代码为旧题目实现，标为`md5-new`的则为新版
 
-??? note "参考代码 Ver1.0 ( md5-bf test1用时约21.703960709s )"
+??? warning "参考代码 Ver1.0 ( md5-bf test1用时约21.703960709s )"
     ```c++
     --8<-- "docs/code/md5-bf.cpp"
     ```
@@ -321,7 +473,7 @@ $$
 
 这个算法名字叫`Xorshift Jump`
 
-??? note "RndGen"
+??? example "RndGen"
     ```c++
     --8<-- "docs/code/rndgen.cpp"
     ```
@@ -348,7 +500,7 @@ $$
 
 经过火焰图查看，我们的 MD5 计算占比从 50% 提升到了 90%，可喜可贺可喜可贺
 
-??? note "最终优化代码 (270.2pts)"
+??? success "最终优化代码 (270.2pts)"
     ```c++
     --8<-- "docs/code/md5-new.cpp"
     ```
