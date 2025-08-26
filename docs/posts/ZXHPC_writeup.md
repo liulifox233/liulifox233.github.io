@@ -810,7 +810,7 @@ Passed
 
 这个程序的行为非常复杂，我们先看看 profile 结果
 
-本次比赛我主要使用 [samply](https://github.com/mstange/samply) 作为 profile 工具进行，这个工具能采样程序运行数据并用 `profiler.firefox.com` 作为前端画出直观的火焰图并显示热点代码
+本次比赛我主要使用 [samply](https://github.com/mstange/samply) 作为 profile 工具，这个工具能采样程序运行数据并用 `profiler.firefox.com` 作为前端画出直观的火焰图并显示热点代码
 
 ![](../assets/posts/profile.webp)
 
@@ -820,7 +820,7 @@ Passed
 
 查看这个 [Hashmaps Benchmarks](https://martin.ankerl.com/2019/04/01/hashmap-benchmarks-05-conclusion/) ，考虑到静态链接到程序中的难度，我选择了 `absl::flat_hash_map`
 
-为了优化 hashmap 速度，我将原来由多个字符串拼接成的 string key (src_ip + "|" + ...) 替换为一个自定义的 FiveTuple 结构体，减少了字符串拼接操作
+为了优化 hashmap 速度，我将原来由多个字符串拼接成的 `string key (src_ip + "|" + ...)` 替换为一个自定义的 FiveTuple 结构体，减少了字符串拼接操作
 
 分析题目，其实我们不需要完整解析和储存每一行，只需要在协议是 "TCP" 或 "DNS" 才去解析后续的字段（如端口、Flags、域名等）。对于不关心的协议，解析工作在协议名之后就停止了
 
@@ -947,7 +947,7 @@ Passed
 
 ```chat
 [left] [https://avatars.githubusercontent.com/u/191038400] 流离流离，你这个 ip_str_less 虽然好，但是不是分支有点太多了？
-[right] [https://avatars.githubusercontent.com/u/88608708] 确实确实，这么多分支对 CPU 的 `分支预测` 太不友好了，但是没关系，LUT 会出手☝️🤓
+[right] [https://avatars.githubusercontent.com/u/88608708] 确实确实，这么多分支对现代 CPU 的分支预测太不友好了，但是没关系，LUT 会出手☝️🤓
 ```
 
 在原来的 `ip_str_less` 函数中，每比较一个 ip 至少需要 8 个分支，这太慢了
