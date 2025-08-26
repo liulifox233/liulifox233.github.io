@@ -3060,7 +3060,7 @@ accessible to both developers and end users. We're doing that by
 combining <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> with <a href="https://github.com/jart/cosmopolitan">Cosmopolitan Libc</a> into one
 framework that collapses all the complexity of LLMs down to
 a single-file executable (called a "llamafile") that runs
-locally on most computers, with no installation.<br/><br/></p>
+locally on most computers, with no installation.</p>
 </details>
 <p>一键运行，在服务器上可以无须配置任何环境直接运行</p>
 <p>对于模型，我尝试了这几个模型</p>
@@ -3463,14 +3463,14 @@ locally on most computers, with no installation.<br/><br/></p>
 </span></code></pre></div>
 </details>
 <p>这个程序的行为非常复杂，我们先看看 profile 结果</p>
-<p>本次比赛我主要使用 <a href="https://github.com/mstange/samply">samply</a> 作为 profile 工具，这个工具能采样程序运行数据并用 <code>profiler.firefox.com</code> 作为前端画出直观的火焰图并显示热点代码</p>
+<p>本次比赛我主要使用 <a href="https://github.com/mstange/samply">samply</a> 作为 profile 工具，这个工具能采样程序运行数据，用 <code>profiler.firefox.com</code> 作为前端画出直观的火焰图与显示热点代码</p>
 <p><img alt="" src="../../../../assets/posts/profile.webp" /></p>
 <p>可以发现大部分的时间都是花在 <code>std::map</code> 的插入与查找操作上，<code>std::map</code> 的内部实现是红黑树，对于大量插入查找的行为，hashmap 才是更合适的数据结构</p>
 <h3 id="traffic-detector-ver10">traffic-detector Ver1.0<a class="headerlink" href="#traffic-detector-ver10" title="Permanent link">&para;</a></h3>
 <p>查看这个 <a href="https://martin.ankerl.com/2019/04/01/hashmap-benchmarks-05-conclusion/">Hashmaps Benchmarks</a> ，考虑到静态链接到程序中的难度，我选择了 <code>absl::flat_hash_map</code></p>
 <p>为了优化 hashmap 速度，我将原来由多个字符串拼接成的 <code>string key (src_ip + "|" + ...)</code> 替换为一个自定义的 FiveTuple 结构体，减少了字符串拼接操作</p>
 <p>分析题目，其实我们不需要完整解析和储存每一行，只需要在协议是 "TCP" 或 "DNS" 才去解析后续的字段（如端口、Flags、域名等）。对于不关心的协议，解析工作在协议名之后就停止了</p>
-<p>通过这些优化，我们的程序从需要 <code>233.565s</code> 加速到了只需需要 <code>86.318s</code>，加速约 2.7倍</p>
+<p>通过这些优化，我们的程序从需要 <code>233.565s</code> 加速到了只需要 <code>86.318s</code>，加速约 2.7倍</p>
 <details class="success">
 <summary>traffic-detector Ver1.0</summary>
 <div class="language-c++ highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
