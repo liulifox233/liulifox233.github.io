@@ -622,7 +622,7 @@ $$
     combining [llama.cpp](https://github.com/ggerganov/llama.cpp) with [Cosmopolitan Libc](https://github.com/jart/cosmopolitan) into one
     framework that collapses all the complexity of LLMs down to
     a single-file executable (called a "llamafile") that runs
-    locally on most computers, with no installation.<br/><br/>
+    locally on most computers, with no installation.
 
 一键运行，在服务器上可以无须配置任何环境直接运行
 
@@ -810,7 +810,7 @@ Passed
 
 这个程序的行为非常复杂，我们先看看 profile 结果
 
-本次比赛我主要使用 [samply](https://github.com/mstange/samply) 作为 profile 工具，这个工具能采样程序运行数据并用 `profiler.firefox.com` 作为前端画出直观的火焰图并显示热点代码
+本次比赛我主要使用 [samply](https://github.com/mstange/samply) 作为 profile 工具，这个工具能采样程序运行数据，用 `profiler.firefox.com` 作为前端画出直观的火焰图与显示热点代码
 
 ![](../assets/posts/profile.webp)
 
@@ -824,7 +824,7 @@ Passed
 
 分析题目，其实我们不需要完整解析和储存每一行，只需要在协议是 "TCP" 或 "DNS" 才去解析后续的字段（如端口、Flags、域名等）。对于不关心的协议，解析工作在协议名之后就停止了
 
-通过这些优化，我们的程序从需要 `233.565s` 加速到了只需需要 `86.318s`，加速约 2.7倍
+通过这些优化，我们的程序从需要 `233.565s` 加速到了只需要 `86.318s`，加速约 2.7倍
 
 ??? success "traffic-detector Ver1.0"
     ```c++
