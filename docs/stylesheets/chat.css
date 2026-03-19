@@ -35,8 +35,8 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  background-color: var(--md-default-bg-color--lighter);
-  border: 2px solid var(--md-default-fg-color--lightest);
+  background-color: var(--chat-avatar-bg);
+  border: 2px solid var(--chat-avatar-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,7 +53,7 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  border: 2px solid var(--md-default-fg-color--lightest);
+  border: 2px solid var(--chat-avatar-border);
   align-self: flex-start;
   margin-top: -5px;
 }
@@ -74,8 +74,8 @@
 
 /* 左侧消息气泡样式 */
 .chat-message-left .chat-bubble {
-  background-color: var(--md-default-bg-color--light);
-  color: var(--md-default-fg-color);
+  background-color: var(--chat-bubble-left-bg);
+  color: var(--chat-bubble-left-text);
   border-top-left-radius: 3px;
   border-bottom-left-radius: 18px;
   border-bottom-right-radius: 18px;
@@ -84,30 +84,12 @@
 
 /* 右侧消息气泡样式 */
 .chat-message-right .chat-bubble {
-  background-color: var(--md-primary-fg-color);
-  color: var(--md-primary-bg-color);
+  background-color: var(--chat-bubble-right-bg);
+  color: var(--chat-bubble-right-text);
   border-top-right-radius: 3px;
   border-bottom-left-radius: 18px;
   border-bottom-right-radius: 18px;
   border-top-left-radius: 18px;
-}
-
-/* 日间模式特殊样式 */
-[data-md-color-scheme="light"] .chat-message-right .chat-bubble {
-  background-color: var(--md-primary-fg-color);
-  /* color: var(--md-primary-bg-color); */
-}
-
-/* 夜间模式特殊样式 */
-[data-md-color-scheme="dark"] .chat-message-left .chat-bubble {
-    background-color: var(--md-primary-fg-color);
-  color: var(--md-primary-bg-color);
-
-}
-
-[data-md-color-scheme="dark"] .chat-message-right .chat-bubble {
-  background-color: var(--md-primary-fg-color--dark);
-  color: var(--md-default-fg-color);
 }
 
 /* 动画效果 */
