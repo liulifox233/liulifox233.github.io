@@ -267,10 +267,10 @@
       if (sbDl) {
         sbDl.innerHTML = "";
         [
-          ["字符 AI 率", fmt(report.charPercent) + "%"],
-          ["句子 AI 率", fmt(report.sentencePercent) + "%"],
-          ["加权 AI 率", fmt(report.weightedPercent) + "%"],
-          ["AI 句子数",  (report.aiChunks || 0) + " / " + (report.totalChunks || 0)],
+          ["字符 AIGC 率", fmt(report.charPercent) + "%"],
+          ["句子 AIGC 率", fmt(report.sentencePercent) + "%"],
+          ["加权 AIGC 率", fmt(report.weightedPercent) + "%"],
+          ["AIGC 句子数",  (report.aiChunks || 0) + " / " + (report.totalChunks || 0)],
         ].forEach(function (pair) {
           var dt = document.createElement("dt"); dt.textContent = pair[0];
           var dd = document.createElement("dd"); dd.textContent = pair[1];
