@@ -1338,7 +1338,6 @@
     <div class="aigc-sb-btns">
       <button class="aigc-ghost-btn" id="aigc-edit-btn" style="display:none">编辑</button>
       <button class="aigc-primary-btn" id="aigc-analyze-btn" disabled>检测</button>
-      <span class="aigc-char-count" id="aigc-char-count" style="margin-left:auto">0 字符</span>
     </div>
   </div>
 
@@ -1358,7 +1357,10 @@
 
   
   <div class="aigc-sb-score" id="aigc-sb-score" style="display:none">
-    <div class="aigc-sb-score-verdict" id="aigc-sb-score-verdict"></div>
+    <div class="aigc-sb-score-head">
+      <div class="aigc-sb-score-label">AIGC rate</div>
+      <div class="aigc-sb-score-verdict" id="aigc-sb-score-verdict"></div>
+    </div>
     <div class="aigc-sb-score-num" id="aigc-sb-score-num"></div>
     <div class="aigc-sb-bar-track">
       <div class="aigc-sb-bar" id="aigc-sb-bar" style="width:0%"></div>
