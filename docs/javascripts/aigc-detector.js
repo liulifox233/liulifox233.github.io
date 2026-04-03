@@ -67,7 +67,6 @@
 
     var textarea   = document.getElementById("aigc-textarea");
     var output     = document.getElementById("aigc-output");
-    var charCount  = document.getElementById("aigc-char-count");
     var analyzeBtn = document.getElementById("aigc-analyze-btn");
     var editBtn    = document.getElementById("aigc-edit-btn");
 
@@ -115,7 +114,6 @@
 
     textarea.addEventListener("input", function () {
       autoResize();
-      charCount.textContent = textarea.value.length + " 字符";
       refreshBtn();
     });
 
@@ -229,7 +227,6 @@
 
         textarea.value = normalized;
         autoResize();
-        charCount.textContent = textarea.value.length + " 字符";
         pendingAutostart = true;
         refreshBtn();
 
