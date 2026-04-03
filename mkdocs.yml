@@ -130,6 +130,8 @@ nav:
     - japanese:
       - notes/japanese/plan.md
       - notes/japanese/case-particles.md
+  - Tools:
+    - tools/aigc-detection.md
   - About:
     - about.md
 
@@ -139,12 +141,14 @@ extra_javascript:
   - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
   - https://unpkg.com/d3@7/dist/d3.min.js
   - javascripts/hpc-visualizations.js
+  - javascripts/aigc-detector.js
   - javascripts/chat.js
 
 extra_css:
   - stylesheets/extra.css
   - https://unpkg.com/katex@0/dist/katex.min.css
   - stylesheets/hpc-visualizations.css
+  - stylesheets/aigc-detector.css
   - stylesheets/chat.css
 
 copyright: <a href="https://icp.gov.moe/?keyword=20250039" target="_blank">萌ICP备20250039号</a>

@@ -1,0 +1,85 @@
+{#-
+  Override: when page.meta.aigc_sidebar is set, render the AIGC detector
+  sidebar in place of the standard table of contents.
+-#}
+{% if page and page.meta.aigc_sidebar %}
+
+<div class="aigc-sb" id="aigc-sb">
+
+  {# ── Actions ── #}
+  <div class="aigc-sb-actions">
+    <div class="aigc-sb-btns">
+      <button class="aigc-ghost-btn" id="aigc-edit-btn" style="display:none">编辑</button>
+      <button class="aigc-primary-btn" id="aigc-analyze-btn" disabled>检测</button>
+      <span class="aigc-char-count" id="aigc-char-count" style="margin-left:auto">0 字符</span>
+    </div>
+  </div>
+
+  {# ── Status ── #}
+  <div class="aigc-sb-status" id="aigc-sb-status">
+    <span class="aigc-sb-dot" id="aigc-sb-dot"></span>
+    <span id="aigc-sb-status-text">正在加载…</span>
+  </div>
+
+  <div class="aigc-sb-upload" id="aigc-sb-upload" style="display:none">
+    <p class="aigc-sb-hint">
+      未找到 <code>models.bin</code>，请手动上传：
+    </p>
+    <label class="aigc-sb-upload-btn" for="aigc-model-file">选择文件</label>
+    <input type="file" id="aigc-model-file" accept=".bin" style="display:none">
+  </div>
+
+  {# ── Score (hidden until first analysis) ── #}
+  <div class="aigc-sb-score" id="aigc-sb-score" style="display:none">
+    <div class="aigc-sb-score-verdict" id="aigc-sb-score-verdict"></div>
+    <div class="aigc-sb-score-num" id="aigc-sb-score-num"></div>
+    <div class="aigc-sb-bar-track">
+      <div class="aigc-sb-bar" id="aigc-sb-bar" style="width:0%"></div>
+    </div>
+    <div class="aigc-sb-score-sub" id="aigc-sb-score-sub"></div>
+  </div>
+
+  {# ── Stats ── #}
+  <div class="aigc-sb-section" id="aigc-sb-stats" style="display:none">
+    <div class="aigc-sb-section-title">统计</div>
+    <dl class="aigc-sb-dl" id="aigc-sb-dl"></dl>
+  </div>
+
+  {# ── Model breakdown ── #}
+  <div class="aigc-sb-section" id="aigc-sb-models" style="display:none">
+    <div class="aigc-sb-section-title">模型归因</div>
+    <div class="aigc-sb-breakdown" id="aigc-sb-breakdown"></div>
+  </div>
+
+</div>
+
+{# Keep a hidden toc stub so Material's JS doesn't complain #}
+<ul class="md-nav__list" data-md-component="toc" aria-hidden="true" style="display:none"></ul>
+
+{% else %}
+
+{# ── Original toc.html logic (also handles page=None for 404 etc.) ── #}
+{% set title = lang.t("toc") %}
+{% if config.mdx_configs.toc and config.mdx_configs.toc.title %}
+  {% set title = config.mdx_configs.toc.title %}
+{% endif %}
+<nav class="md-nav md-nav--secondary" aria-label="{{ title | e }}">
+  {% set toc = page.toc %}
+  {% set first = toc | first %}
+  {% if first and first.level == 1 %}
+    {% set toc = first.children %}
+  {% endif %}
+  {% if toc %}
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      {{ title }}
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      {% for toc_item in toc %}
+        {% include "partials/toc-item.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</nav>
+
+{% endif %}
