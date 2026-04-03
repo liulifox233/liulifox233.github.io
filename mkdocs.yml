@@ -85,6 +85,9 @@ extra:
       name: Ruri on Github
       link: https://github.com/liulifox233
 
+hooks:
+  - hooks/aigc_meta.py
+
 markdown_extensions:
   - admonition
   - pymdownx.superfences

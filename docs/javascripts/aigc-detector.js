@@ -1,10 +1,13 @@
 (function () {
   "use strict";
 
+  var RAW_PREFIX = "https://raw.githubusercontent.com/liulifox233/liulifox233.github.io/main/docs/";
+
   /* ── WASM state (persisted across instant-nav) ─────────────────── */
   var _wasmReady = false;
   var _detector = null;
   var _modelLoaded = false;
+  var _normalizeMarkdownForAigc = null;
 
   async function initWasm() {
     if (_wasmReady) return true;
@@ -26,6 +29,13 @@
     if (!_wasmReady) throw new Error("WASM not ready");
     _detector.loadModelsFromBytes(bytes);
     _modelLoaded = _detector.isReady();
+  }
+
+  async function normalizeMarkdownForAigc(text) {
+    if (_normalizeMarkdownForAigc) return _normalizeMarkdownForAigc(text);
+    var mod = await import(new URL("/javascripts/aigc-shared.mjs", location.origin).href);
+    _normalizeMarkdownForAigc = mod.normalizeMarkdownForAigc;
+    return _normalizeMarkdownForAigc(text);
   }
 
   /* ── Labels ───────────────────────────────────────────────────── */
@@ -77,6 +87,7 @@
     var sbBreakdown  = document.getElementById("aigc-sb-breakdown");
 
     var mode = "edit"; // "edit" | "view"
+    var pendingAutostart = false;
 
     /* ── Status helpers ── */
     function setStatus(s, text) {
@@ -174,6 +185,8 @@
       }, 16);
     });
 
+    loadArticleFromQuery();
+
     /* ── Bootstrap ── */
     (async function bootstrap() {
       if (!_wasmReady) {
@@ -181,7 +194,11 @@
         var ok = await initWasm();
         if (!ok) { setStatus("error", "WASM 加载失败，请刷新"); return; }
       }
-      if (_modelLoaded) { setModelReady(); return; }
+      if (_modelLoaded) {
+        setModelReady();
+        maybeAutoAnalyze();
+        return;
+      }
       setStatus("loading", "正在加载模型文件…");
       try {
         var res = await fetch(new URL("/assets/models.bin", location.origin).href);
@@ -189,10 +206,49 @@
         var bytes = new Uint8Array(await res.arrayBuffer());
         await loadModelBytes(bytes);
         setModelReady();
+        maybeAutoAnalyze();
       } catch (_) {
         showUpload();
       }
     })();
+
+    async function loadArticleFromQuery() {
+      try {
+        var rawUrl = readRawUrlFromQuery();
+        if (!rawUrl) return;
+
+        setStatus("loading", "正在加载源 Markdown…");
+        var res = await fetch(rawUrl, { credentials: "omit" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+
+        var rawMarkdown = await res.text();
+        var normalized = await normalizeMarkdownForAigc(rawMarkdown);
+        if (!normalized || normalized.trim().length < 10) {
+          throw new Error("正文过短或为空");
+        }
+
+        textarea.value = normalized;
+        autoResize();
+        charCount.textContent = textarea.value.length + " 字符";
+        pendingAutostart = true;
+        refreshBtn();
+
+        if (_modelLoaded) {
+          setModelReady();
+          maybeAutoAnalyze();
+        } else {
+          setStatus("loading", "源 Markdown 已加载，等待模型就绪…");
+        }
+      } catch (e) {
+        setStatus("error", "源 Markdown 加载失败：" + e.message);
+      }
+    }
+
+    function maybeAutoAnalyze() {
+      if (!pendingAutostart || !_modelLoaded || mode !== "edit") return;
+      pendingAutostart = false;
+      analyzeBtn.click();
+    }
 
     /* ── Render sidebar results ── */
     function renderSidebar(report) {
@@ -273,12 +329,32 @@
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
+  function readRawUrlFromQuery() {
+    var params = new URLSearchParams(location.search);
+    var rawUrl = params.get("url");
+    if (!rawUrl) return "";
+    if (!isAllowedRawUrl(rawUrl)) {
+      throw new Error("仅支持当前仓库的 GitHub Raw Markdown 链接");
+    }
+    return rawUrl;
+  }
+
+  function isAllowedRawUrl(rawUrl) {
+    if (!rawUrl) return false;
+    if (rawUrl.slice(0, RAW_PREFIX.length) !== RAW_PREFIX) return false;
+    return /\.md(?:[#?].*)?$/i.test(rawUrl);
+  }
+
   /* ── Material instant-nav ─────────────────────────────────────── */
 
   if (typeof document$ !== "undefined") {
-    document$.subscribe(initPage);
+    document$.subscribe(function () {
+      initPage();
+    });
   } else if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initPage);
+    document.addEventListener("DOMContentLoaded", function () {
+      initPage();
+    });
   } else {
     initPage();
   }
