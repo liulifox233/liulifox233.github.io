@@ -15,7 +15,7 @@
     --theme-link: #8f6678;
     --theme-code-bg: #fff2eb;
     --theme-code-fg: #5c4952;
-    --theme-accent: #a599b5;
+    --theme-accent: #eecbcb;
     --theme-mark: rgba(255, 183, 66, 0.3);
     --theme-shadow-1: 0 0.2rem 0.5rem rgba(92, 73, 82, 0.08), 0 0 0.05rem rgba(92, 73, 82, 0.08);
     --theme-shadow-2: 0 0.2rem 0.5rem rgba(92, 73, 82, 0.12), 0 0 0.05rem rgba(92, 73, 82, 0.12);
@@ -53,7 +53,7 @@
     --md-typeset-mark-color: var(--theme-mark);
 
     --md-accent-fg-color: var(--theme-accent);
-    --md-accent-fg-color--transparent: rgba(165, 153, 181, 0.16);
+    --md-accent-fg-color--transparent: rgba(123, 92, 139, 0.16);
     --md-accent-bg-color: #fff;
     --md-accent-bg-color--light: rgba(255, 255, 255, 0.7);
 

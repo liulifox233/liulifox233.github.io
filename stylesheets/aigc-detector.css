@@ -1,0 +1,387 @@
+/* ================================================================
+   AIGC Detector
+   Main content: flat, no border-radius, article-width
+   Sidebar: injected into Material's .md-sidebar--secondary via toc.html
+   Action color: var(--theme-link)
+     light #8f6678  text #fff
+     dark  #dd99bb  text var(--theme-bg)
+   ================================================================ */
+
+/* ── Main content area ──────────────────────────────────────────── */
+
+#aigc-app {
+  margin-top: 1.5rem;
+}
+
+/* Rectangular input/output container — no border-radius, flat */
+.aigc-input-wrap {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  transition: border-color 0.2s;
+}
+
+.aigc-input-wrap:hover,
+.aigc-input-wrap:focus-within {
+  border-color: var(--theme-link);
+}
+
+.aigc-textarea {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--md-default-fg-color);
+  background: transparent;
+  box-sizing: border-box;
+  caret-color: var(--theme-link);
+}
+
+.aigc-textarea::placeholder {
+  color: var(--md-default-fg-color--lighter);
+}
+
+/* Highlighted output — same geometry as textarea */
+.aigc-output {
+  min-height: 520px;
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--md-default-fg-color);
+  white-space: pre-wrap;
+  word-break: break-word;
+  cursor: text;
+}
+
+/* Chunk tokens */
+.aigc-chunk { border-radius: 0; }
+
+.aigc-chunk--sev2 { background: rgba(176, 60, 60, 0.10); }
+.aigc-chunk--sev3 { background: rgba(176, 60, 60, 0.21); }
+.aigc-chunk--sev4 {
+  background: rgba(176, 60, 60, 0.34);
+  text-decoration: underline;
+  text-decoration-color: rgba(176, 60, 60, 0.4);
+  text-underline-offset: 2px;
+}
+
+[data-md-color-scheme="dark"] .aigc-chunk--sev2 { background: rgba(220, 100, 100, 0.13); }
+[data-md-color-scheme="dark"] .aigc-chunk--sev3 { background: rgba(220, 100, 100, 0.25); }
+[data-md-color-scheme="dark"] .aigc-chunk--sev4 {
+  background: rgba(220, 100, 100, 0.38);
+  text-decoration-color: rgba(220, 100, 100, 0.5);
+}
+
+/* Sidebar actions block */
+.aigc-sb-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.aigc-sb-btns {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.aigc-char-count {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--lighter);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ghost / secondary button */
+.aigc-ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.75rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  background: transparent;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.83rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+  line-height: 1.4;
+}
+
+.aigc-ghost-btn:hover {
+  border-color: var(--theme-link);
+  color: var(--theme-link);
+}
+
+/* Primary action button */
+.aigc-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 1rem;
+  border: none;
+  background: var(--theme-link);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter 0.18s, transform 0.14s;
+  line-height: 1.4;
+}
+
+.aigc-primary-btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.aigc-primary-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.aigc-primary-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+[data-md-color-scheme="dark"] .aigc-primary-btn {
+  color: var(--theme-bg);
+}
+
+/* ── Sidebar (inside Material's .md-sidebar--secondary) ─────────── */
+/*
+  Material's sidebar scrollwrap already handles sticky + scroll.
+  We style our content to match the TOC look.
+  Reference sizes: md-nav font ~0.7rem, color --md-default-fg-color--light
+*/
+
+.aigc-sb {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+  padding: 0.25rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+/* Status row */
+.aigc-sb-status {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0;
+  color: var(--md-default-fg-color--light);
+}
+
+.aigc-sb-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--md-default-fg-color--lighter);
+  transition: background 0.3s;
+}
+
+.aigc-sb-dot[data-s="loading"] {
+  background: var(--theme-link);
+  animation: aigc-blink 1.1s ease-in-out infinite;
+}
+
+.aigc-sb-dot[data-s="ready"] {
+  background: var(--theme-link);
+}
+
+.aigc-sb-dot[data-s="error"],
+.aigc-sb-dot[data-s="warn"] {
+  background: color-mix(in srgb, var(--theme-link) 55%, #666 45%);
+}
+
+@keyframes aigc-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+/* Upload prompt */
+.aigc-sb-upload {
+  padding: 0.4rem 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.aigc-sb-hint {
+  margin: 0;
+  line-height: 1.55;
+  color: var(--md-default-fg-color--light);
+}
+
+.aigc-sb-hint code {
+  background: var(--md-code-bg-color);
+  color: var(--md-code-fg-color);
+  padding: 0.03em 0.26em;
+  font-size: 0.9em;
+}
+
+.aigc-sb-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.26rem 0.65rem;
+  background: var(--theme-link);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: filter 0.18s;
+  line-height: 1.4;
+}
+
+.aigc-sb-upload-btn:hover {
+  filter: brightness(1.1);
+}
+
+[data-md-color-scheme="dark"] .aigc-sb-upload-btn {
+  color: var(--theme-bg);
+}
+
+/* ── Score block ── */
+.aigc-sb-score {
+  padding: 0.7rem 0 0.5rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  margin-top: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.aigc-sb-score-verdict {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.4s;
+}
+
+/* Verdict label uses theme accent */
+.aigc-sb-score-verdict { color: var(--theme-link); }
+
+.aigc-sb-score-num {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--md-default-fg-color);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Thin progress bar */
+.aigc-sb-bar-track {
+  height: 3px;
+  background: var(--md-default-fg-color--lightest);
+  overflow: hidden;
+}
+
+.aigc-sb-bar {
+  height: 100%;
+  background: var(--theme-link);
+  transition: width 0.7s cubic-bezier(.4,0,.2,1), background 0.5s;
+}
+
+
+.aigc-sb-score-sub {
+  color: var(--md-default-fg-color--lighter);
+  font-size: 0.68rem;
+}
+
+/* ── Section blocks ── */
+.aigc-sb-section {
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  margin-top: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.aigc-sb-section-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--lighter);
+}
+
+/* Stats dl */
+.aigc-sb-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.55rem;
+  margin: 0;
+  font-size: 0.72rem;
+}
+
+.aigc-sb-dl dt {
+  color: var(--md-default-fg-color--light);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.aigc-sb-dl dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--md-default-fg-color);
+}
+
+/* Model breakdown */
+.aigc-sb-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.38rem;
+}
+
+.aigc-bd-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.3rem 0.4rem;
+  font-size: 0.7rem;
+  align-items: center;
+}
+
+.aigc-bd-name {
+  color: var(--md-default-fg-color);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.aigc-bd-pct {
+  color: var(--md-default-fg-color--light);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.aigc-bd-track {
+  height: 3px;
+  background: var(--md-default-fg-color--lightest);
+  overflow: hidden;
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.aigc-bd-fill {
+  height: 100%;
+  background: var(--theme-link);
+  opacity: 0.6;
+  transition: width 0.65s cubic-bezier(.4,0,.2,1);
+  min-width: 2px;
+}
