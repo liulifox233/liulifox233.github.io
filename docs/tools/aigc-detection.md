@@ -10,6 +10,9 @@ aigc_sidebar: true
 !!!WARNING
     此 AI 检测模型 {==非通用模型==}，检测结果纯 {==图一乐==}。
 
+!!!NOTE
+    加权字符：命中 2 个模型的片段按 `0.33` 倍计入；命中 3 个模型的片段按 `0.66` 倍计入；命中 4 个及以上模型的片段按 `1.00` 倍计入。
+
 <div id="aigc-app">
   <div class="aigc-input-wrap" id="aigc-input-wrap">
     <textarea
