@@ -261,7 +261,7 @@
       if (sbNum)     sbNum.textContent = pct.toFixed(1) + "%";
       if (sbBar)     sbBar.style.width = Math.min(pct, 100) + "%";
       if (sbSub)     sbSub.textContent =
-        (report.aiChars || 0) + " / " + (report.totalChars || 0) + " 字符被标记";
+        "加权字符 " + (report.weightedAiChars || 0) + " / " + (report.totalChars || 0);
 
       /* Stats */
       if (sbDl) {
@@ -269,7 +269,6 @@
         [
           ["字符 AIGC 率", fmt(report.charPercent) + "%"],
           ["句子 AIGC 率", fmt(report.sentencePercent) + "%"],
-          ["加权 AIGC 率", fmt(report.weightedPercent) + "%"],
           ["AIGC 句子数",  (report.aiChunks || 0) + " / " + (report.totalChunks || 0)],
         ].forEach(function (pair) {
           var dt = document.createElement("dt"); dt.textContent = pair[0];

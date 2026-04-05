@@ -1358,7 +1358,7 @@
   
   <div class="aigc-sb-score" id="aigc-sb-score" style="display:none">
     <div class="aigc-sb-score-head">
-      <div class="aigc-sb-score-label">AIGC rate</div>
+      <div class="aigc-sb-score-label">Weighted AIGC rate</div>
       <div class="aigc-sb-score-verdict" id="aigc-sb-score-verdict"></div>
     </div>
     <div class="aigc-sb-score-num" id="aigc-sb-score-num"></div>
@@ -1456,6 +1456,10 @@
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>此 AI 检测模型 <mark class="critic">非通用模型</mark>，检测结果纯 <mark class="critic">图一乐</mark>。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>加权字符：命中 2 个模型的片段按 <code>0.33</code> 倍计入；命中 3 个模型的片段按 <code>0.66</code> 倍计入；命中 4 个及以上模型的片段按 <code>1.00</code> 倍计入。</p>
 </div>
 <div id="aigc-app">
   <div class="aigc-input-wrap" id="aigc-input-wrap">
